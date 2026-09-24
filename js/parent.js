@@ -273,6 +273,9 @@ function settings(main) {
     ${sw('speakTn', 'Lire aussi le tunisien à voix haute', 'Avec la voix arabe standard : prononciation approximative.')}
     ${sw('showLat', 'Afficher la lecture en lettres latines')}
     ${sw('karaoke', 'Mode karaoké', 'Les mots s’allument au fur et à mesure de la lecture.')}
+    <div class="field" style="margin-top:10px"><label>Décalage du karaoké : <span data-ov>${s.karaOffset}</span> ms (augmente si l’orange part avant le son)</label>
+      <input type="range" min="0" max="1500" step="50" value="${s.karaOffset}" data-off></div>
+    <div style="display:flex;gap:12px;align-items:center"><span class="ar" style="font-size:26px;flex:1" data-sample>السَّلامُ عَلَيْكُم، كَيْفَ حالُكَ ؟</span><button class="btn small blue" data-testk>▶️ Tester</button></div>
     ${sw('unlockAll', 'Débloquer tout le parcours', 'Pour sauter des étapes ou suivre le rythme des séances papa.')}
     <div class="field" style="margin-top:12px"><label>Objectif quotidien</label><select class="input" data-goal>${[10, 20, 30, 50].map(n => `<option ${n === s.dailyGoal ? 'selected' : ''} value="${n}">${n} XP par jour</option>`).join('')}</select></div>
   </div>
@@ -283,6 +286,8 @@ function settings(main) {
   main.querySelector('[data-rate]').oninput = e => { s.rate = +e.target.value; main.querySelector('[data-rv]').textContent = s.rate; store.saveSettings(); };
   main.querySelector('[data-test]').onclick = () => tts.speak('السَّلامُ عَلَيْكُم، كَيْفَ حالُكَ ؟');
   main.querySelector('[data-testtn]').onclick = () => tts.speak('عسلامة، شنيّة أحوالك ؟');
+  main.querySelector('[data-off]').oninput = e => { s.karaOffset = +e.target.value; main.querySelector('[data-ov]').textContent = s.karaOffset; store.saveSettings(); };
+  main.querySelector('[data-testk]').onclick = () => tts.speak('السَّلامُ عَلَيْكُم، كَيْفَ حالُكَ ؟', { el: main.querySelector('[data-sample]') });
   main.querySelector('[data-goal]').onchange = e => { s.dailyGoal = +e.target.value; store.saveSettings(); };
   main.querySelector('[data-pin]').onclick = async () => { const old = store.pinHash; store.pinHash = null; if (!(await requirePin())) { store.pinHash = old; toast('Code inchangé'); } else toast('Nouveau code enregistré'); };
   main.querySelector('[data-update]').onclick = async () => {

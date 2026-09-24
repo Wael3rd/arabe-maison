@@ -12,7 +12,7 @@ function save(key, val) {
 
 export const DEFAULT_SETTINGS = {
   voiceURI: '', rate: 0.85, hearts: true, dailyGoal: 20, mic: true, sounds: true,
-  unlockAll: false, speakTn: true, showLat: true, karaoke: true,
+  unlockAll: false, speakTn: true, showLat: true, karaoke: true, karaOffset: 350,
 };
 
 export const store = {

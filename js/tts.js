@@ -39,26 +39,40 @@ const kara = {
     const mine = () => this.u === u;
     const rate = u.rate || 1;
     this.est = this.spans.reduce((a, sp) => a + this.dur(sp, rate), 0);
+    const off = () => Math.max(0, +store.settings.karaOffset || 0);
+    this.bmode = false;
+    // Mode estimé : on programme tous les mots à l'avance.
     const playFrom = i => {
       this.clearTimers();
       this.spans.forEach((sp, j) => { if (j < i) this.fill(sp, 0); });
       let t = 0;
       for (let j = i; j < this.spans.length; j++) {
         const sp = this.spans[j], d = this.dur(sp, rate);
-        this.timers.push(setTimeout(() => { this.spans.forEach(x => x.classList.remove('cur')); this.fill(sp, d); this.idx = j; }, t));
+        this.timers.push(setTimeout(() => this.word(j, d), t));
         t += d;
       }
     };
-    u.addEventListener('start', () => { if (!mine()) return; this.t0 = performance.now(); playFrom(0); });
+    u.addEventListener('start', () => {
+      if (!mine()) return;
+      this.t0 = performance.now();
+      this.timers.push(setTimeout(() => { if (mine() && !this.bmode) playFrom(0); }, off()));
+    });
+    // Mode synchronisé : la voix signale chaque mot, on n'avance jamais avant elle.
     u.addEventListener('boundary', e => {
       if (!mine() || (e.name && e.name !== 'word')) return;
       const i = this.spans.findIndex(sp => e.charIndex >= +sp.dataset.start && e.charIndex < +sp.dataset.end);
-      if (i > this.idx) playFrom(i);
+      if (i < 0) return;
+      if (!this.bmode) { this.bmode = true; this.clearTimers(); }
+      this.timers.push(setTimeout(() => {
+        if (!mine()) return;
+        this.spans.forEach((sp, j) => { if (j < i) this.fill(sp, 0); });
+        this.word(i, this.dur(this.spans[i], rate));
+      }, off()));
     });
     u.addEventListener('end', () => {
       if (!mine()) return;
-      const real = performance.now() - this.t0;
-      if (this.t0 && this.est > 0 && real > 200) {
+      const real = performance.now() - this.t0 - off();
+      if (!this.bmode && this.t0 && this.est > 0 && real > 200) {
         this.scale = Math.min(3, Math.max(0.35, this.scale * (0.7 + 0.3 * real / this.est)));
         try { localStorage.setItem('ar.karaScale', this.scale.toFixed(3)); } catch {}
       }
@@ -66,6 +80,10 @@ const kara = {
       const el0 = this.el;
       this.timers.push(setTimeout(() => { if (this.el === el0) this.reset(); }, 900));
     });
+  },
+  word(j, d) {
+    this.spans.forEach(x => x.classList.remove('cur'));
+    this.fill(this.spans[j], d); this.idx = j;
   },
   fill(sp, d) {
     sp.style.transitionDuration = Math.round(d) + 'ms';
