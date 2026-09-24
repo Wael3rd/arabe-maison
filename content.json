@@ -1,0 +1,1915 @@
+{
+ "schema": 1,
+ "title": "Arabe à la maison",
+ "updatedAt": "2026-09-25",
+ "guide": "Douze leçons d'une semaine chacune, environ 150 mots au total : de quoi saluer, se présenter, parler de la famille, de la maison, de la nourriture, de l'école et de ses envies. À la fin, les enfants tiennent une conversation simple de deux minutes avec vous.\n\n**Deux arabes, un seul objectif.** Chaque mot est donné en arabe standard (fusha, avec voyelles courtes, pour lire et écrire) et en tunisien (pour parler en famille). Les enfants lisent et écrivent la version standard ; ils parlent avec vous en tunisien. Quand les deux formes sont identiques ou presque, tant mieux : c'est le cas pour une bonne moitié du vocabulaire choisi.\n\n**Rythme :** 3 séances par semaine, mardi et jeudi 20 minutes, samedi 45 minutes. Les deux séances courtes préparent, la longue du samedi est celle où l'on parle vraiment.\n\n| Jour | Durée | Contenu | Exercices de la leçon |\n| --- | --- | --- | --- |\n| Mardi | 20 min | Lecture lente du vocabulaire à voix haute, papa corrige la prononciation, première lecture du mini-dialogue | Exercice 1 |\n| Jeudi | 20 min | Écriture : copie des mots dans le cahier, exercices écrits (compléter, transformer, associer) | Exercices 2 et 3 |\n| Samedi | 45 min | Oral uniquement, cahier fermé : 10 min de révision des leçons précédentes avec un jeu de l'annexe, 20 min de mini-dialogue joué en tunisien avec papa, 15 min de jeu ou de lancement du défi de la semaine | Exercice 4 + défi |\n\nLe défi de la semaine se lance le samedi et se joue au quotidien jusqu'au samedi suivant, où l'on fait le bilan des points avant de passer à la leçon d'après.\n\n**Votre rôle :** vous êtes la voix de référence. Les colonnes « prononciation » sont une béquille pour lire seul ; dès que vous êtes là, c'est votre prononciation qui compte. Parlez-leur en tunisien dès la première leçon, même s'ils répondent en français au début.\n\n**Convention de prononciation** (écriture simplifiée, celle des SMS tunisiens) :\n\n| Lettre arabe | Écrit | Exemple |\n| --- | --- | --- |\n| ع | 3 | 3asslema |\n| ح | 7 | 7lib (lait) |\n| خ | kh | khobz (pain) |\n| غ | gh | ghali (cher) |\n| ق | q | qlam (stylo) |\n| ذ | dh | hadha (celui-ci) |\n| ث | th | thlétha (trois) |\n| ش | ch | chams (soleil) |\n\nLes lettres emphatiques (ص ض ط ظ) sont écrites s, d, t, dh : les enfants les entendent chez vous, pas besoin de les compliquer à l'écrit.\n\n**Matériel :** un cahier par enfant (grands carreaux, écriture de droite à gauche), des cartes bristol pour les jeux de l'annexe, et ce document.",
+ "games": [
+  {
+   "name": "Memory",
+   "rule": "Cartes par paires : un mot en standard, sa traduction française. On retourne deux cartes, on lit à voix haute, on garde la paire",
+   "material": "24 cartes bristol par leçon"
+  },
+  {
+   "name": "Le mot interdit",
+   "rule": "Pendant le repas, un mot français de la leçon est interdit (« pain », « eau »...). Qui le dit en français perd un point, qui le dit en arabe en gagne un",
+   "material": "rien"
+  },
+  {
+   "name": "La chaîne",
+   "rule": "Chacun dit un mot de la leçon, le suivant répète tout et en ajoute un. On s'arrête à la première erreur, on note le record",
+   "material": "rien"
+  },
+  {
+   "name": "Dictée à l'envers",
+   "rule": "Papa dit un mot en tunisien, l'enfant écrit l'équivalent standard. 5 mots, 1 point chacun",
+   "material": "cahier"
+  },
+  {
+   "name": "La marionnette",
+   "rule": "Une peluche « ne parle que tunisien ». Pour obtenir quelque chose d'elle (un bonbon, un autocollant), il faut lui parler en arabe",
+   "material": "une peluche"
+  }
+ ],
+ "corrections": "| Leçon | Réponses |\n| --- | --- |\n| 1 | ما اسْمُكَ ؟ / كَمْ عُمْرُكَ ؟ |\n| 2 | أَبي / جَدَّتي / خالي |\n| 3 | thlétha + arb3a = ٧ سَبْعة (à adapter selon les nombres choisis) |\n| 4 | بَيْت كَبير = grande maison, قَلَم أَصْفَر = stylo jaune, كِتاب جَديد = livre neuf, سَيّارة زَرْقاء = voiture bleue |\n| 6 | عَلى / في / تَحْتَ |\n| 7 | يُؤْلِمُني بَطْني / أَنا فَرْحان / هِيَ مَريضة |\n| 8 | nekteb / nel3ab / nékel |\n| 9 | selon le jour ; rappel : hier = أَمْس كانَ + jour, demain = غَداً + jour |\n| 10 | يَنام / يَسْمَع / يَأْكُل |\n| 11 | مَنْ هَذا ؟ → هَذا جَدّي ; أَيْنَ الكِتاب ؟ → عَلى الطّاوِلة ; كَمْ عُمْرُكَ ؟ → عُمْري تِسْعُ سَنَوات ; مَتى تَنام ؟ → في المَساء |",
+ "lexique": "Si les enfants ne retiennent que ceux-là, ils peuvent déjà se débrouiller. Classés par leçon, forme tunisienne entre parenthèses.\n\n| Leçon | Mots |\n| --- | --- |\n| 1 | السَّلامُ عَلَيْكُم (3asslema), شُكْراً (y3aychek), اِسْمي (ismi), عُمْري (3omri), نَعَم / لا (ey / la) |\n| 2 | أَبي (baba), أُمّي (ommi), أَخي (khouya), أُخْتي (okhti), عِنْدي (3andi) |\n| 3 | واحِد (wa7ed), اِثْنان (zouz), ثَلاثة (thlétha), عَشَرة (3achra), كَمْ (qaddech) |\n| 4 | أَحْمَر (a7mar), أَزْرَق (azraq), كَبير (kbir), صَغير (sghir), جَميل (mezyen) |\n| 5 | آكُل (nékel), أَشْرَب (nochrob), أُريد (n7eb), خُبْز (khobz), ماء (mé) |\n| 6 | بَيْت (dar), غُرْفة (bit), باب (béb), أَيْنَ (win), هُنا (houni) |\n| 7 | رَأْس (ras), يَد (yed), مَريض (mridh), تَعْبان (3ayyén), فَرْحان (far7an) |\n| 8 à 11 | مَدْرَسة (madrsa), أَقْرَأ (naqra), أَكْتُب (nekteb), أَذْهَب (nemchi), الآن (tawa), اليَوْم (el youm), ماذا (chnowa), لِماذا (3lech), كَيْفَ (kifech), لا أَعْرِف (ma na3rafch) |",
+ "units": [
+  {
+   "id": "u1",
+   "num": 1,
+   "title": "Saluer et se présenter",
+   "icon": "👋",
+   "color": "#22B573",
+   "goal": "À la fin de la semaine, chaque enfant sait dire bonjour, demander comment ça va, donner son nom et son âge.",
+   "vocab": [
+    {
+     "id": "u1w1",
+     "fr": "Bonjour (salut)",
+     "ar": "السَّلامُ عَلَيْكُم",
+     "lat": "as-salamou 3alaykoum",
+     "tn": "عسلامة",
+     "tnLat": "3asslema",
+     "emoji": "👋"
+    },
+    {
+     "id": "u1w2",
+     "fr": "Réponse au bonjour",
+     "ar": "وَعَلَيْكُمُ السَّلام",
+     "lat": "wa 3alaykoumou s-salam",
+     "tn": "عسلامة",
+     "tnLat": "3asslema"
+    },
+    {
+     "id": "u1w3",
+     "fr": "Bonjour (le matin)",
+     "ar": "صَباحُ الخَيْر",
+     "lat": "sabah al-khayr",
+     "tn": "صباح الخير",
+     "tnLat": "sbah el khir",
+     "emoji": "🌅"
+    },
+    {
+     "id": "u1w4",
+     "fr": "Bonsoir",
+     "ar": "مَساءُ الخَيْر",
+     "lat": "masa' al-khayr",
+     "tn": "مساء الخير",
+     "tnLat": "msa el khir",
+     "emoji": "🌙"
+    },
+    {
+     "id": "u1w5",
+     "fr": "Comment vas-tu ?",
+     "ar": "كَيْفَ حالُكَ ؟",
+     "lat": "kayfa halouka ?",
+     "tn": "شنيّة أحوالك ؟",
+     "tnLat": "chniya a7walek ?"
+    },
+    {
+     "id": "u1w6",
+     "fr": "Bien, merci",
+     "ar": "بِخَيْر، شُكْراً",
+     "lat": "bikhayr, choukran",
+     "tn": "لاباس، يعيّشك",
+     "tnLat": "labès, y3aychek",
+     "emoji": "😊"
+    },
+    {
+     "id": "u1w7",
+     "fr": "Comment t'appelles-tu ?",
+     "ar": "ما اسْمُكَ ؟",
+     "lat": "ma ismouka ?",
+     "tn": "شنوّة اسمك ؟",
+     "tnLat": "chnowa ismek ?"
+    },
+    {
+     "id": "u1w8",
+     "fr": "Je m'appelle...",
+     "ar": "اِسْمي...",
+     "lat": "ismi...",
+     "tn": "اسمي...",
+     "tnLat": "ismi..."
+    },
+    {
+     "id": "u1w9",
+     "fr": "Quel âge as-tu ?",
+     "ar": "كَمْ عُمْرُكَ ؟",
+     "lat": "kam 3oumrouka ?",
+     "tn": "قدّاش عمرك ؟",
+     "tnLat": "qaddech 3omrek ?"
+    },
+    {
+     "id": "u1w10",
+     "fr": "J'ai 9 ans",
+     "ar": "عُمْري تِسْعُ سَنَوات",
+     "lat": "3oumri tis3ou sanawat",
+     "tn": "عمري تسعة سنين",
+     "tnLat": "3omri tes3a snin"
+    },
+    {
+     "id": "u1w11",
+     "fr": "Oui / Non",
+     "ar": "نَعَم / لا",
+     "lat": "na3am / la",
+     "tn": "إي / لا",
+     "tnLat": "ey / la",
+     "emoji": "👍"
+    },
+    {
+     "id": "u1w12",
+     "fr": "Au revoir",
+     "ar": "مَعَ السَّلامة",
+     "lat": "ma3a s-salama",
+     "tn": "بالسلامة",
+     "tnLat": "bslema",
+     "emoji": "🚶"
+    }
+   ],
+   "notes": "Pour parler à une fille, le « ka » de la fin devient « ki » en standard (halouki, ismouki, 3oumrouki). En tunisien, c'est pareil au masculin et au féminin.",
+   "dialogue": [
+    {
+     "who": "أ",
+     "ar": "السَّلامُ عَلَيْكُم",
+     "tnLat": "3asslema",
+     "fr": "Bonjour !"
+    },
+    {
+     "who": "ب",
+     "ar": "وَعَلَيْكُمُ السَّلام",
+     "tnLat": "3asslema",
+     "fr": "Bonjour à toi aussi !"
+    },
+    {
+     "who": "أ",
+     "ar": "ما اسْمُكَ ؟",
+     "tnLat": "chnowa ismek ?",
+     "fr": "Comment t'appelles-tu ?"
+    },
+    {
+     "who": "ب",
+     "ar": "اِسْمي يوسُف. وَأَنْتَ ؟",
+     "tnLat": "ismi Youssef, w enti ?",
+     "fr": "Je m'appelle Youssef. Et toi ?"
+    },
+    {
+     "who": "أ",
+     "ar": "اِسْمي سارة. كَمْ عُمْرُكَ ؟",
+     "tnLat": "ismi Sarah, qaddech 3omrek ?",
+     "fr": "Je m'appelle Sarah. Quel âge as-tu ?"
+    },
+    {
+     "who": "ب",
+     "ar": "عُمْري تِسْعُ سَنَوات.",
+     "tnLat": "3omri tes3a snin.",
+     "fr": "J'ai neuf ans."
+    }
+   ],
+   "dialogueNote": "",
+   "exercises": [
+    "**Lecture :** lire le vocabulaire deux fois à voix haute. La deuxième fois, papa cache la colonne « Lecture ».",
+    "**Écriture :** recopier les 6 premières lignes de la colonne « Arabe standard » dans le cahier, une ligne par mot. Remplacer يوسُف et سارة par son propre prénom écrit en arabe.",
+    "**Compléter :** ما ..... ؟ اِسْمي ..... / كَمْ ..... ؟ عُمْري .....",
+    "**Oral :** papa dit un mot en tunisien, l'enfant le retrouve dans la liste et le lit en standard."
+   ],
+   "defi": "Chaque matin de la semaine, le premier qui dit « صباح الخير » à l'autre gagne un point. Le soir, on répond à « chniya a7walek ? » en arabe, jamais en français."
+  },
+  {
+   "id": "u2",
+   "num": 2,
+   "title": "La famille",
+   "icon": "👨‍👩‍👧",
+   "color": "#2D9CDB",
+   "goal": "À la fin de la semaine, chaque enfant présente sa famille en trois phrases : « voici mon père, voici ma mère, j'ai un frère ».",
+   "vocab": [
+    {
+     "id": "u2w1",
+     "fr": "Famille",
+     "ar": "عائِلة",
+     "lat": "3a'ila",
+     "tn": "عايلة",
+     "tnLat": "3ayla",
+     "emoji": "👨‍👩‍👧‍👦"
+    },
+    {
+     "id": "u2w2",
+     "fr": "Père / papa",
+     "ar": "أَب / بابا",
+     "lat": "ab / baba",
+     "tn": "بابا",
+     "tnLat": "baba",
+     "emoji": "👨"
+    },
+    {
+     "id": "u2w3",
+     "fr": "Mère / maman",
+     "ar": "أُمّ / ماما",
+     "lat": "oumm / mama",
+     "tn": "أمّي / ماما",
+     "tnLat": "ommi / mama",
+     "emoji": "👩"
+    },
+    {
+     "id": "u2w4",
+     "fr": "Frère",
+     "ar": "أَخ",
+     "lat": "akh",
+     "tn": "خو",
+     "tnLat": "khou",
+     "note": "mon frère : خويا (khouya)",
+     "emoji": "👦"
+    },
+    {
+     "id": "u2w5",
+     "fr": "Sœur",
+     "ar": "أُخْت",
+     "lat": "oukht",
+     "tn": "أخت",
+     "tnLat": "okht",
+     "note": "ma sœur : أختي (okhti)",
+     "emoji": "👧"
+    },
+    {
+     "id": "u2w6",
+     "fr": "Grand-père",
+     "ar": "جَدّ",
+     "lat": "jadd",
+     "tn": "جدّي",
+     "tnLat": "jeddi",
+     "emoji": "👴"
+    },
+    {
+     "id": "u2w7",
+     "fr": "Grand-mère",
+     "ar": "جَدّة",
+     "lat": "jadda",
+     "tn": "جدّتي",
+     "tnLat": "jeddti",
+     "emoji": "👵"
+    },
+    {
+     "id": "u2w8",
+     "fr": "Oncle (côté père)",
+     "ar": "عَمّ",
+     "lat": "3amm",
+     "tn": "عمّي",
+     "tnLat": "3ammi"
+    },
+    {
+     "id": "u2w9",
+     "fr": "Oncle (côté mère)",
+     "ar": "خال",
+     "lat": "khal",
+     "tn": "خالي",
+     "tnLat": "khali"
+    },
+    {
+     "id": "u2w10",
+     "fr": "Tante (côté père)",
+     "ar": "عَمّة",
+     "lat": "3amma",
+     "tn": "عمّتي",
+     "tnLat": "3ammti"
+    },
+    {
+     "id": "u2w11",
+     "fr": "Tante (côté mère)",
+     "ar": "خالة",
+     "lat": "khala",
+     "tn": "خالتي",
+     "tnLat": "khalti"
+    },
+    {
+     "id": "u2w12",
+     "fr": "Voici (masc. / fém.)",
+     "ar": "هَذا / هَذِهِ",
+     "lat": "hadha / hadhihi",
+     "tn": "هذا / هاذي",
+     "tnLat": "hadha / hadhi"
+    },
+    {
+     "id": "u2w13",
+     "fr": "Mon / ma",
+     "ar": "ـي",
+     "lat": "-i",
+     "tn": "ـي",
+     "tnLat": "-i"
+    },
+    {
+     "id": "u2w14",
+     "fr": "J'ai...",
+     "ar": "عِنْدي...",
+     "lat": "3indi...",
+     "tn": "عندي...",
+     "tnLat": "3andi..."
+    }
+   ],
+   "notes": "Le petit « ـي » collé à la fin du mot veut dire « mon » ou « ma » : أَخ (frère) devient أَخي (mon frère), أُخْت devient أُخْتي (ma sœur). C'est identique en standard et en tunisien : une règle apprise, deux langues gagnées.",
+   "dialogue": [
+    {
+     "who": "أ",
+     "ar": "مَنْ هَذا ؟",
+     "tnLat": "chkoun hadha ?",
+     "fr": "Qui est-ce ?"
+    },
+    {
+     "who": "ب",
+     "ar": "هَذا أَبي. وَهَذِهِ أُمّي.",
+     "tnLat": "hadha baba, w hadhi ommi",
+     "fr": "Voici mon père. Et voici ma mère."
+    },
+    {
+     "who": "أ",
+     "ar": "هَلْ عِنْدَكَ أَخ ؟",
+     "tnLat": "3andek khou ?",
+     "fr": "As-tu un frère ?"
+    },
+    {
+     "who": "ب",
+     "ar": "نَعَم، عِنْدي أَخ وَأُخْت.",
+     "tnLat": "ey, 3andi khou w okht.",
+     "fr": "Oui, j'ai un frère et une sœur."
+    }
+   ],
+   "dialogueNote": "",
+   "exercises": [
+    "**Lecture :** lire la liste, puis papa montre une photo de famille et l'enfant dit qui c'est en standard (هَذا جَدّي).",
+    "**Écriture :** dessiner son arbre généalogique dans le cahier (parents, frères et sœurs, grands-parents) et écrire chaque personne en arabe standard avec « mon / ma ».",
+    "**Transformer :** ajouter ـي à la fin : أَب → ..... / جَدّة → ..... / خال → .....",
+    "**Oral :** papa dit « chkoun hadha ? » en montrant quelqu'un, l'enfant répond en tunisien avec le bon mot."
+   ],
+   "defi": "Appeler un grand-parent, un oncle ou une tante (ou envoyer un message vocal) et se présenter en arabe : bonjour, mon nom, mon âge, « toi tu es mon khali / ma 3ammti »."
+  },
+  {
+   "id": "u3",
+   "num": 3,
+   "title": "Les nombres de 1 à 10",
+   "icon": "🔢",
+   "color": "#FF9F1C",
+   "goal": "À la fin de la semaine, les enfants comptent jusqu'à 10 dans les deux sens, disent leur âge et répondent à « combien ? ».",
+   "vocab": [
+    {
+     "id": "u3w1",
+     "fr": "1",
+     "ar": "واحِد",
+     "lat": "wahid",
+     "tn": "واحد",
+     "tnLat": "wa7ed",
+     "emoji": "1️⃣"
+    },
+    {
+     "id": "u3w2",
+     "fr": "2",
+     "ar": "اِثْنان",
+     "lat": "ithnan",
+     "tn": "زوز",
+     "tnLat": "zouz",
+     "emoji": "2️⃣"
+    },
+    {
+     "id": "u3w3",
+     "fr": "3",
+     "ar": "ثَلاثة",
+     "lat": "thalatha",
+     "tn": "ثلاثة",
+     "tnLat": "thlétha",
+     "emoji": "3️⃣"
+    },
+    {
+     "id": "u3w4",
+     "fr": "4",
+     "ar": "أَرْبَعة",
+     "lat": "arba3a",
+     "tn": "أربعة",
+     "tnLat": "arb3a",
+     "emoji": "4️⃣"
+    },
+    {
+     "id": "u3w5",
+     "fr": "5",
+     "ar": "خَمْسة",
+     "lat": "khamsa",
+     "tn": "خمسة",
+     "tnLat": "khamsa",
+     "emoji": "5️⃣"
+    },
+    {
+     "id": "u3w6",
+     "fr": "6",
+     "ar": "سِتّة",
+     "lat": "sitta",
+     "tn": "ستّة",
+     "tnLat": "setta",
+     "emoji": "6️⃣"
+    },
+    {
+     "id": "u3w7",
+     "fr": "7",
+     "ar": "سَبْعة",
+     "lat": "sab3a",
+     "tn": "سبعة",
+     "tnLat": "seb3a",
+     "emoji": "7️⃣"
+    },
+    {
+     "id": "u3w8",
+     "fr": "8",
+     "ar": "ثَمانِية",
+     "lat": "thamaniya",
+     "tn": "ثمنية",
+     "tnLat": "thménya",
+     "emoji": "8️⃣"
+    },
+    {
+     "id": "u3w9",
+     "fr": "9",
+     "ar": "تِسْعة",
+     "lat": "tis3a",
+     "tn": "تسعة",
+     "tnLat": "tes3a",
+     "emoji": "9️⃣"
+    },
+    {
+     "id": "u3w10",
+     "fr": "10",
+     "ar": "عَشَرة",
+     "lat": "3achara",
+     "tn": "عشرة",
+     "tnLat": "3achra",
+     "emoji": "🔟"
+    },
+    {
+     "id": "u3w11",
+     "fr": "Combien ?",
+     "ar": "كَمْ ؟",
+     "lat": "kam ?",
+     "tn": "قدّاش ؟",
+     "tnLat": "qaddech ?"
+    },
+    {
+     "id": "u3w12",
+     "fr": "Beaucoup / un peu",
+     "ar": "كَثير / قَليل",
+     "lat": "kathir / qalil",
+     "tn": "برشا / شويّة",
+     "tnLat": "barcha / chwaya"
+    }
+   ],
+   "notes": "Seul le « 2 » change vraiment entre les deux : ithnan en standard, zouz en tunisien. Les chiffres s'écrivent aussi avec les signes ١ ٢ ٣ ٤ ٥ ٦ ٧ ٨ ٩ ١٠, dans le même sens que chez nous (de gauche à droite).",
+   "dialogue": [
+    {
+     "who": "أ",
+     "ar": "كَمْ أَخاً عِنْدَكَ ؟",
+     "tnLat": "qaddech 3andek men khou ?",
+     "fr": "Combien de frères as-tu ?"
+    },
+    {
+     "who": "ب",
+     "ar": "عِنْدي أَخ واحِد وَأُخْتان.",
+     "tnLat": "3andi khou wa7ed w zouz khwet",
+     "fr": "J'ai un frère et deux sœurs."
+    },
+    {
+     "who": "أ",
+     "ar": "وَكَمْ عُمْرُكَ ؟",
+     "tnLat": "w qaddech 3omrek ?",
+     "fr": "Et quel âge as-tu ?"
+    },
+    {
+     "who": "ب",
+     "ar": "عُمْري إِحْدى عَشْرة سَنة.",
+     "tnLat": "3omri 7dach sna.",
+     "fr": "J'ai onze ans."
+    }
+   ],
+   "dialogueNote": "Pour les âges au-delà de 10 : 11 = إِحْدى عَشْرة (ihda 3achra, tunisien : 7dach), 12 = اِثْنَتا عَشْرة (ithnata 3achra, tunisien : thnach).",
+   "exercises": [
+    "**Lecture :** lire de 1 à 10, puis de 10 à 1, puis les nombres pairs seulement.",
+    "**Écriture :** écrire les chiffres arabes ١ à ١٠ et, sous chacun, le mot en standard.",
+    "**Calcul :** papa dit deux nombres en tunisien, l'enfant écrit la somme en chiffres arabes et la dit en standard (thlétha + arb3a = ٧ سَبْعة).",
+    "**Oral :** compter les objets de la table, les marches de l'escalier, les voitures rouges dans la rue."
+   ],
+   "defi": "Pendant une semaine, tous les nombres de la maison se disent en arabe : le nombre de couverts à mettre, le score au jeu, la minuterie du four, le numéro de la chaîne."
+  },
+  {
+   "id": "u4",
+   "num": 4,
+   "title": "Les couleurs et décrire",
+   "icon": "🎨",
+   "color": "#9B6DFF",
+   "goal": "À la fin de la semaine, les enfants nomment les couleurs et disent si une chose est grande, petite, belle ou nouvelle.",
+   "vocab": [
+    {
+     "id": "u4w1",
+     "fr": "Rouge",
+     "ar": "أَحْمَر",
+     "lat": "ahmar",
+     "tn": "أحمر",
+     "tnLat": "a7mar",
+     "emoji": "🔴"
+    },
+    {
+     "id": "u4w2",
+     "fr": "Bleu",
+     "ar": "أَزْرَق",
+     "lat": "azraq",
+     "tn": "أزرق",
+     "tnLat": "azraq",
+     "emoji": "🔵"
+    },
+    {
+     "id": "u4w3",
+     "fr": "Vert",
+     "ar": "أَخْضَر",
+     "lat": "akhdar",
+     "tn": "أخضر",
+     "tnLat": "akhdhar",
+     "emoji": "🟢"
+    },
+    {
+     "id": "u4w4",
+     "fr": "Jaune",
+     "ar": "أَصْفَر",
+     "lat": "asfar",
+     "tn": "أصفر",
+     "tnLat": "asfar",
+     "emoji": "🟡"
+    },
+    {
+     "id": "u4w5",
+     "fr": "Blanc",
+     "ar": "أَبْيَض",
+     "lat": "abyad",
+     "tn": "أبيض",
+     "tnLat": "abyadh",
+     "emoji": "⚪"
+    },
+    {
+     "id": "u4w6",
+     "fr": "Noir",
+     "ar": "أَسْوَد",
+     "lat": "aswad",
+     "tn": "أكحل",
+     "tnLat": "ak7al",
+     "emoji": "⚫"
+    },
+    {
+     "id": "u4w7",
+     "fr": "Grand",
+     "ar": "كَبير",
+     "lat": "kabir",
+     "tn": "كبير",
+     "tnLat": "kbir",
+     "emoji": "🐘"
+    },
+    {
+     "id": "u4w8",
+     "fr": "Petit",
+     "ar": "صَغير",
+     "lat": "saghir",
+     "tn": "صغير",
+     "tnLat": "sghir",
+     "emoji": "🐭"
+    },
+    {
+     "id": "u4w9",
+     "fr": "Beau / joli",
+     "ar": "جَميل",
+     "lat": "jamil",
+     "tn": "مزيان",
+     "tnLat": "mezyen",
+     "emoji": "🌸"
+    },
+    {
+     "id": "u4w10",
+     "fr": "Nouveau",
+     "ar": "جَديد",
+     "lat": "jadid",
+     "tn": "جديد",
+     "tnLat": "jdid",
+     "emoji": "✨"
+    },
+    {
+     "id": "u4w11",
+     "fr": "Vieux, ancien",
+     "ar": "قَديم",
+     "lat": "qadim",
+     "tn": "قديم",
+     "tnLat": "qdim",
+     "emoji": "🏚️"
+    },
+    {
+     "id": "u4w12",
+     "fr": "Quelle couleur ?",
+     "ar": "ما اللَّوْن ؟",
+     "lat": "ma l-lawn ?",
+     "tn": "شنوّة اللون ؟",
+     "tnLat": "chnowa el loun ?"
+    }
+   ],
+   "notes": "Seuls « noir » et « beau » changent vraiment entre standard et tunisien. En arabe, l'adjectif se place après le nom : « une voiture rouge » se dit سَيّارة حَمْراء (voiture rouge), et au féminin les couleurs prennent la forme حَمْراء, زَرْقاء, خَضْراء, صَفْراء, بَيْضاء, سَوْداء. En tunisien : 7amra, zarqa, khadhra, safra, baydha, ka7la.",
+   "dialogue": [
+    {
+     "who": "أ",
+     "ar": "ما لَوْنُ السَّيّارة ؟",
+     "tnLat": "chnowa loun el karhba ?",
+     "fr": "De quelle couleur est la voiture ?"
+    },
+    {
+     "who": "ب",
+     "ar": "السَّيّارة حَمْراء.",
+     "tnLat": "el karhba 7amra",
+     "fr": "La voiture est rouge."
+    },
+    {
+     "who": "أ",
+     "ar": "هَلْ هِيَ كَبيرة ؟",
+     "tnLat": "hiya kbira ?",
+     "fr": "Est-elle grande ?"
+    },
+    {
+     "who": "ب",
+     "ar": "لا، هِيَ صَغيرة وَجَميلة.",
+     "tnLat": "la, hiya sghira w mezyena.",
+     "fr": "Non, elle est petite et jolie."
+    }
+   ],
+   "dialogueNote": "",
+   "exercises": [
+    "**Lecture :** lire les couleurs en pointant un objet de cette couleur dans la pièce.",
+    "**Écriture :** colorier six ronds dans le cahier et écrire la couleur en standard sous chacun.",
+    "**Associer :** relier chaque phrase à son dessin : بَيْت كَبير / قَلَم أَصْفَر / كِتاب جَديد / سَيّارة زَرْقاء.",
+    "**Oral :** jeu du « je vois quelque chose de... » : papa dit « nchouf 7aja khadhra », les enfants cherchent l'objet vert."
+   ],
+   "defi": "Décrire ses vêtements chaque matin avant de sortir : « el t-shirt azraq, el sabbat ak7al » (le t-shirt est bleu, les chaussures sont noires)."
+  },
+  {
+   "id": "u5",
+   "num": 5,
+   "title": "À table (manger, boire)",
+   "icon": "🍽️",
+   "color": "#FF5A5F",
+   "goal": "À la fin de la semaine, les enfants demandent à manger et à boire, disent ce qu'ils aiment, et disent « c'est bon ».",
+   "vocab": [
+    {
+     "id": "u5w1",
+     "fr": "Je mange",
+     "ar": "آكُل",
+     "lat": "akoul",
+     "tn": "ناكل",
+     "tnLat": "nékel",
+     "emoji": "🍴"
+    },
+    {
+     "id": "u5w2",
+     "fr": "Je bois",
+     "ar": "أَشْرَب",
+     "lat": "achrab",
+     "tn": "نشرب",
+     "tnLat": "nochrob",
+     "emoji": "🥤"
+    },
+    {
+     "id": "u5w3",
+     "fr": "Je veux / j'aime",
+     "ar": "أُريد / أُحِبّ",
+     "lat": "ourid / ouhibb",
+     "tn": "نحبّ",
+     "tnLat": "n7eb",
+     "note": "pour les deux"
+    },
+    {
+     "id": "u5w4",
+     "fr": "Pain",
+     "ar": "خُبْز",
+     "lat": "khoubz",
+     "tn": "خبز",
+     "tnLat": "khobz",
+     "emoji": "🍞"
+    },
+    {
+     "id": "u5w5",
+     "fr": "Eau",
+     "ar": "ماء",
+     "lat": "ma'",
+     "tn": "ماء",
+     "tnLat": "mé",
+     "emoji": "💧"
+    },
+    {
+     "id": "u5w6",
+     "fr": "Lait",
+     "ar": "حَليب",
+     "lat": "halib",
+     "tn": "حليب",
+     "tnLat": "7lib",
+     "emoji": "🥛"
+    },
+    {
+     "id": "u5w7",
+     "fr": "Œuf",
+     "ar": "بَيْض",
+     "lat": "bayd",
+     "tn": "عظم",
+     "tnLat": "3dham",
+     "emoji": "🥚"
+    },
+    {
+     "id": "u5w8",
+     "fr": "Viande",
+     "ar": "لَحْم",
+     "lat": "lahm",
+     "tn": "لحم",
+     "tnLat": "l7am",
+     "emoji": "🥩"
+    },
+    {
+     "id": "u5w9",
+     "fr": "Poulet",
+     "ar": "دَجاج",
+     "lat": "dajaj",
+     "tn": "دجاج",
+     "tnLat": "djej",
+     "emoji": "🍗"
+    },
+    {
+     "id": "u5w10",
+     "fr": "Poisson",
+     "ar": "سَمَك",
+     "lat": "samak",
+     "tn": "حوت",
+     "tnLat": "7out",
+     "emoji": "🐟"
+    },
+    {
+     "id": "u5w11",
+     "fr": "Riz",
+     "ar": "أَرُزّ",
+     "lat": "arouzz",
+     "tn": "روز",
+     "tnLat": "rouz",
+     "emoji": "🍚"
+    },
+    {
+     "id": "u5w12",
+     "fr": "Pomme",
+     "ar": "تُفّاح",
+     "lat": "touffah",
+     "tn": "تفّاح",
+     "tnLat": "teffé7",
+     "emoji": "🍎"
+    },
+    {
+     "id": "u5w13",
+     "fr": "Bon, délicieux",
+     "ar": "لَذيذ",
+     "lat": "ladhidh",
+     "tn": "بنين",
+     "tnLat": "bnin",
+     "emoji": "😋"
+    },
+    {
+     "id": "u5w14",
+     "fr": "J'ai faim / j'ai soif",
+     "ar": "أَنا جَوْعان / عَطْشان",
+     "lat": "ana jaw3an / 3atchan",
+     "tn": "جيعان / عطشان",
+     "tnLat": "jî3an / 3atchan"
+    },
+    {
+     "id": "u5w15",
+     "fr": "Bon appétit",
+     "ar": "بِالهَناء وَالشِّفاء",
+     "lat": "bil-hana' wa ch-chifa'",
+     "tn": "بالصحّة",
+     "tnLat": "bes-sa77a"
+    }
+   ],
+   "notes": "En tunisien, نحبّ (n7eb) sert à la fois pour « je veux » et « j'aime » : « n7eb khobz » = je veux du pain, « n7eb el 7out » = j'aime le poisson. Le contexte fait la différence, exactement comme quand on dit « j'aime bien un café » en français.",
+   "dialogue": [
+    {
+     "who": "أ",
+     "ar": "هَلْ أَنْتَ جَوْعان ؟",
+     "tnLat": "enti jî3an ?",
+     "fr": "As-tu faim ?"
+    },
+    {
+     "who": "ب",
+     "ar": "نَعَم، أَنا جَوْعان. أُريد خُبْزاً وَبَيْضاً.",
+     "tnLat": "ey, ana jî3an, n7eb khobz w 3dham",
+     "fr": "Oui, j'ai faim. Je veux du pain et des œufs."
+    },
+    {
+     "who": "أ",
+     "ar": "وَماذا تَشْرَب ؟",
+     "tnLat": "w chnowa tochrob ?",
+     "fr": "Et que bois-tu ?"
+    },
+    {
+     "who": "ب",
+     "ar": "أَشْرَب حَليباً. شُكْراً، هَذا لَذيذ !",
+     "tnLat": "nochrob 7lib, y3aychek, bnin barcha !",
+     "fr": "Je bois du lait. Merci, c'est délicieux !"
+    }
+   ],
+   "dialogueNote": "",
+   "exercises": [
+    "**Lecture :** lire la liste, puis papa cache la colonne française et l'enfant traduit.",
+    "**Écriture :** écrire son menu du dîner en arabe standard : « ce soir, je mange ..... et je bois ..... » (اللَّيْلة آكُل ..... وَأَشْرَب .....).",
+    "**Trier :** copier les mots dans deux colonnes, « ça se mange » / « ça se boit ».",
+    "**Oral :** au dîner, chaque enfant demande un aliment en tunisien (« n7eb khobz, y3aychek ») avant de le recevoir."
+   ],
+   "defi": "Faire les courses avec papa et nommer en arabe cinq produits mis dans le panier. Bonus : dire « bnin ! » (c'est bon) à chaque repas, en standard « لَذيذ » si on veut faire chic."
+  },
+  {
+   "id": "u6",
+   "num": 6,
+   "title": "La maison",
+   "icon": "🏠",
+   "color": "#1D72A6",
+   "goal": "À la fin de la semaine, les enfants nomment les pièces et les objets du quotidien et disent où est une chose (« le livre est sur la table »).",
+   "vocab": [
+    {
+     "id": "u6w1",
+     "fr": "Maison",
+     "ar": "بَيْت",
+     "lat": "bayt",
+     "tn": "دار",
+     "tnLat": "dar",
+     "emoji": "🏠"
+    },
+    {
+     "id": "u6w2",
+     "fr": "Chambre",
+     "ar": "غُرْفة",
+     "lat": "ghourfa",
+     "tn": "بيت",
+     "tnLat": "bit",
+     "emoji": "🛌"
+    },
+    {
+     "id": "u6w3",
+     "fr": "Cuisine",
+     "ar": "مَطْبَخ",
+     "lat": "matbakh",
+     "tn": "كوجينة",
+     "tnLat": "koujina",
+     "emoji": "🍳"
+    },
+    {
+     "id": "u6w4",
+     "fr": "Salle de bain",
+     "ar": "حَمّام",
+     "lat": "hammam",
+     "tn": "حمّام",
+     "tnLat": "7ammem",
+     "emoji": "🛁"
+    },
+    {
+     "id": "u6w5",
+     "fr": "Porte",
+     "ar": "باب",
+     "lat": "bab",
+     "tn": "باب",
+     "tnLat": "béb",
+     "emoji": "🚪"
+    },
+    {
+     "id": "u6w6",
+     "fr": "Fenêtre",
+     "ar": "نافِذة",
+     "lat": "nafidha",
+     "tn": "شبّاك",
+     "tnLat": "chobbék",
+     "emoji": "🪟"
+    },
+    {
+     "id": "u6w7",
+     "fr": "Table",
+     "ar": "طاوِلة",
+     "lat": "tawila",
+     "tn": "طاولة",
+     "tnLat": "tawla"
+    },
+    {
+     "id": "u6w8",
+     "fr": "Chaise",
+     "ar": "كُرْسي",
+     "lat": "koursi",
+     "tn": "كرسي",
+     "tnLat": "korsi",
+     "emoji": "🪑"
+    },
+    {
+     "id": "u6w9",
+     "fr": "Lit",
+     "ar": "سَرير",
+     "lat": "sarir",
+     "tn": "فرش",
+     "tnLat": "farch",
+     "emoji": "🛏️"
+    },
+    {
+     "id": "u6w10",
+     "fr": "Télévision",
+     "ar": "تِلْفاز",
+     "lat": "tilfaz",
+     "tn": "تلفزة",
+     "tnLat": "talfza",
+     "emoji": "📺"
+    },
+    {
+     "id": "u6w11",
+     "fr": "Téléphone",
+     "ar": "هاتِف",
+     "lat": "hatif",
+     "tn": "تليفون",
+     "tnLat": "telifoun",
+     "emoji": "📱"
+    },
+    {
+     "id": "u6w12",
+     "fr": "Où ?",
+     "ar": "أَيْنَ ؟",
+     "lat": "ayna ?",
+     "tn": "وين ؟",
+     "tnLat": "win ?"
+    },
+    {
+     "id": "u6w13",
+     "fr": "Dans / sur / sous",
+     "ar": "في / عَلى / تَحْت",
+     "lat": "fi / 3ala / taht",
+     "tn": "في / فوق / تحت",
+     "tnLat": "fi / fouq / ta7t"
+    },
+    {
+     "id": "u6w14",
+     "fr": "Ici / là-bas",
+     "ar": "هُنا / هُناك",
+     "lat": "houna / hounak",
+     "tn": "هوني / غادي",
+     "tnLat": "houni / ghadi"
+    }
+   ],
+   "notes": "Attention au faux ami : بَيْت veut dire « maison » en standard mais « chambre » en tunisien (bit). La maison en tunisien, c'est دار (dar). C'est le mot piège de tout le cours, à répéter souvent.",
+   "dialogue": [
+    {
+     "who": "أ",
+     "ar": "أَيْنَ الهاتِف ؟",
+     "tnLat": "win el telifoun ?",
+     "fr": "Où est le téléphone ?"
+    },
+    {
+     "who": "ب",
+     "ar": "الهاتِف عَلى الطّاوِلة، في المَطْبَخ.",
+     "tnLat": "el telifoun fouq el tawla, fil koujina",
+     "fr": "Le téléphone est sur la table, dans la cuisine."
+    },
+    {
+     "who": "أ",
+     "ar": "وَأَيْنَ الكِتاب ؟",
+     "tnLat": "w win el kteb ?",
+     "fr": "Et où est le livre ?"
+    },
+    {
+     "who": "ب",
+     "ar": "الكِتاب تَحْتَ السَّرير، في غُرْفَتي.",
+     "tnLat": "el kteb ta7t el farch, fi biti.",
+     "fr": "Le livre est sous le lit, dans ma chambre."
+    }
+   ],
+   "dialogueNote": "",
+   "exercises": [
+    "**Lecture :** lire la liste en se promenant dans la maison et en touchant chaque objet nommé.",
+    "**Écriture :** coller des étiquettes (mot en standard) sur la porte, la fenêtre, la table, la chaise, la télévision. Elles restent une semaine.",
+    "**Compléter :** الكِتاب ..... الطّاوِلة (sur) / الكُرْسي ..... المَطْبَخ (dans) / الهاتِف ..... السَّرير (sous).",
+    "**Oral :** papa cache un objet et dit « win el telifoun ? », les enfants cherchent en posant des questions : « fi bit ? fil koujina ? »."
+   ],
+   "defi": "Le jeu du chaud-froid en arabe : celui qui cherche l'objet n'a le droit de parler que tunisien (« houni ? ghadi ? fouq ? ta7t ? »), et celui qui a caché répond « ey » ou « la »."
+  },
+  {
+   "id": "u7",
+   "num": 7,
+   "title": "Le corps et comment je me sens",
+   "icon": "🧍",
+   "color": "#00A99D",
+   "goal": "À la fin de la semaine, les enfants nomment les parties du corps, disent « j'ai mal à... » et « je suis fatigué / content / malade ».",
+   "vocab": [
+    {
+     "id": "u7w1",
+     "fr": "Tête",
+     "ar": "رَأْس",
+     "lat": "ra's",
+     "tn": "راس",
+     "tnLat": "ras",
+     "emoji": "🙂"
+    },
+    {
+     "id": "u7w2",
+     "fr": "Œil / yeux",
+     "ar": "عَيْن / عُيون",
+     "lat": "3ayn / 3ouyoun",
+     "tn": "عين / عينين",
+     "tnLat": "3in / 3inin",
+     "emoji": "👁️"
+    },
+    {
+     "id": "u7w3",
+     "fr": "Oreille",
+     "ar": "أُذُن",
+     "lat": "oudhoun",
+     "tn": "وذن",
+     "tnLat": "wdhen",
+     "emoji": "👂"
+    },
+    {
+     "id": "u7w4",
+     "fr": "Nez",
+     "ar": "أَنْف",
+     "lat": "anf",
+     "tn": "خشم",
+     "tnLat": "khchem",
+     "emoji": "👃"
+    },
+    {
+     "id": "u7w5",
+     "fr": "Bouche",
+     "ar": "فَم",
+     "lat": "fam",
+     "tn": "فمّ",
+     "tnLat": "fomm",
+     "emoji": "👄"
+    },
+    {
+     "id": "u7w6",
+     "fr": "Dent / dents",
+     "ar": "سِنّ / أَسْنان",
+     "lat": "sinn / asnan",
+     "tn": "سنّ / سنين",
+     "tnLat": "senn / snin",
+     "emoji": "🦷"
+    },
+    {
+     "id": "u7w7",
+     "fr": "Main",
+     "ar": "يَد",
+     "lat": "yad",
+     "tn": "يد",
+     "tnLat": "yed",
+     "emoji": "✋"
+    },
+    {
+     "id": "u7w8",
+     "fr": "Pied",
+     "ar": "قَدَم",
+     "lat": "qadam",
+     "tn": "ساق",
+     "tnLat": "saq",
+     "emoji": "🦶"
+    },
+    {
+     "id": "u7w9",
+     "fr": "Ventre",
+     "ar": "بَطْن",
+     "lat": "batn",
+     "tn": "كرش",
+     "tnLat": "kerch"
+    },
+    {
+     "id": "u7w10",
+     "fr": "J'ai mal à...",
+     "ar": "يُؤْلِمُني...",
+     "lat": "you'limouni...",
+     "tn": "يوجع فيّ...",
+     "tnLat": "youja3 fiya..."
+    },
+    {
+     "id": "u7w11",
+     "fr": "Malade",
+     "ar": "مَريض",
+     "lat": "marid",
+     "tn": "مريض",
+     "tnLat": "mridh",
+     "emoji": "🤒"
+    },
+    {
+     "id": "u7w12",
+     "fr": "Fatigué",
+     "ar": "تَعْبان",
+     "lat": "ta3ban",
+     "tn": "عيّان",
+     "tnLat": "3ayyén",
+     "emoji": "🥱"
+    },
+    {
+     "id": "u7w13",
+     "fr": "Content",
+     "ar": "فَرْحان",
+     "lat": "farhan",
+     "tn": "فرحان",
+     "tnLat": "far7an",
+     "emoji": "😄"
+    },
+    {
+     "id": "u7w14",
+     "fr": "Ça va bien",
+     "ar": "أَنا بِخَيْر",
+     "lat": "ana bikhayr",
+     "tn": "أنا لاباس",
+     "tnLat": "ana labès"
+    }
+   ],
+   "notes": "En tunisien, « j'ai mal à la tête » se dit « rasi youja3 fiya » (ma tête me fait mal). Le ـي de « mon / ma » revient ici : rasi (ma tête), yedi (ma main), kerchi (mon ventre).",
+   "dialogue": [
+    {
+     "who": "أ",
+     "ar": "كَيْفَ حالُكَ اليَوْم ؟",
+     "tnLat": "chniya a7walek el youm ?",
+     "fr": "Comment vas-tu aujourd'hui ?"
+    },
+    {
+     "who": "ب",
+     "ar": "أَنا تَعْبان. يُؤْلِمُني رَأْسي.",
+     "tnLat": "ana 3ayyén, rasi youja3 fiya",
+     "fr": "Je suis fatigué. J'ai mal à la tête."
+    },
+    {
+     "who": "أ",
+     "ar": "هَلْ أَنْتَ مَريض ؟",
+     "tnLat": "enti mridh ?",
+     "fr": "Es-tu malade ?"
+    },
+    {
+     "who": "ب",
+     "ar": "لا، أَنا بِخَيْر، شُكْراً.",
+     "tnLat": "la, ana labès, y3aychek.",
+     "fr": "Non, je vais bien, merci."
+    }
+   ],
+   "dialogueNote": "",
+   "exercises": [
+    "**Lecture :** lire la liste en touchant la partie du corps nommée. Puis papa lit en tunisien, l'enfant touche sans regarder.",
+    "**Écriture :** dessiner un bonhomme dans le cahier et écrire 8 parties du corps en standard avec des flèches.",
+    "**Compléter :** يُؤْلِمُني ..... (ventre) / أَنا ..... (content) / هِيَ ..... (malade, au féminin : مَريضة).",
+    "**Oral :** « Jacques a dit » en tunisien : « 7ott yedek 3ala rasek » (mets ta main sur ta tête), « 7ott yedek 3ala kerchek »."
+   ],
+   "defi": "Chaque soir au coucher, répondre en arabe à « chniya a7walek ? » avec un vrai mot de sentiment : far7an, 3ayyén, labès. Le mot « bien » tout court est interdit cette semaine."
+  },
+  {
+   "id": "u8",
+   "num": 8,
+   "title": "L'école",
+   "icon": "🎒",
+   "color": "#E0A800",
+   "goal": "À la fin de la semaine, les enfants racontent leur journée d'école en quelques phrases : le maître, le cartable, ce qu'ils lisent et écrivent, leur ami.",
+   "vocab": [
+    {
+     "id": "u8w1",
+     "fr": "École",
+     "ar": "مَدْرَسة",
+     "lat": "madrasa",
+     "tn": "مدرسة",
+     "tnLat": "madrsa",
+     "emoji": "🏫"
+    },
+    {
+     "id": "u8w2",
+     "fr": "Maître, maîtresse",
+     "ar": "مُعَلِّم / مُعَلِّمة",
+     "lat": "mou3allim / mou3allima",
+     "tn": "معلّم / معلّمة",
+     "tnLat": "m3allem / m3allma",
+     "emoji": "🧑‍🏫"
+    },
+    {
+     "id": "u8w3",
+     "fr": "Élève",
+     "ar": "تِلْميذ",
+     "lat": "tilmidh",
+     "tn": "تلميذ",
+     "tnLat": "telmidh",
+     "emoji": "🧒"
+    },
+    {
+     "id": "u8w4",
+     "fr": "Classe",
+     "ar": "قِسْم",
+     "lat": "qism",
+     "tn": "قسم",
+     "tnLat": "qsam"
+    },
+    {
+     "id": "u8w5",
+     "fr": "Cartable",
+     "ar": "مِحْفَظة",
+     "lat": "mihfadha",
+     "tn": "كرطابل",
+     "tnLat": "kartabl",
+     "emoji": "🎒"
+    },
+    {
+     "id": "u8w6",
+     "fr": "Livre",
+     "ar": "كِتاب",
+     "lat": "kitab",
+     "tn": "كتاب",
+     "tnLat": "kteb",
+     "emoji": "📖"
+    },
+    {
+     "id": "u8w7",
+     "fr": "Cahier",
+     "ar": "دَفْتَر",
+     "lat": "daftar",
+     "tn": "كرّاس",
+     "tnLat": "karrés",
+     "emoji": "📓"
+    },
+    {
+     "id": "u8w8",
+     "fr": "Stylo",
+     "ar": "قَلَم",
+     "lat": "qalam",
+     "tn": "ستيلو",
+     "tnLat": "stilou",
+     "emoji": "🖊️"
+    },
+    {
+     "id": "u8w9",
+     "fr": "Je lis",
+     "ar": "أَقْرَأ",
+     "lat": "aqra'",
+     "tn": "نقرا",
+     "tnLat": "naqra"
+    },
+    {
+     "id": "u8w10",
+     "fr": "J'écris",
+     "ar": "أَكْتُب",
+     "lat": "aktoub",
+     "tn": "نكتب",
+     "tnLat": "nekteb",
+     "emoji": "✍️"
+    },
+    {
+     "id": "u8w11",
+     "fr": "Je joue",
+     "ar": "أَلْعَب",
+     "lat": "al3ab",
+     "tn": "نلعب",
+     "tnLat": "nel3ab",
+     "emoji": "⚽"
+    },
+    {
+     "id": "u8w12",
+     "fr": "Ami / amie",
+     "ar": "صَديق / صَديقة",
+     "lat": "sadiq / sadiqa",
+     "tn": "صاحب / صاحبة",
+     "tnLat": "sa7eb / sa7ba",
+     "emoji": "🤝"
+    },
+    {
+     "id": "u8w13",
+     "fr": "Facile / difficile",
+     "ar": "سَهْل / صَعْب",
+     "lat": "sahl / sa3b",
+     "tn": "ساهل / صعيب",
+     "tnLat": "séhel / s3ib"
+    },
+    {
+     "id": "u8w14",
+     "fr": "Bravo !",
+     "ar": "أَحْسَنْت !",
+     "lat": "ahsant !",
+     "tn": "صحّة ! / برافو",
+     "tnLat": "sa77a ! / bravo",
+     "emoji": "👏"
+    }
+   ],
+   "notes": "Remarque sur les verbes : en standard, « je » se dit avec un أ au début (أَقْرَأ, أَكْتُب). En tunisien, c'est un ن (naqra, nekteb). C'est la différence la plus visible entre les deux, et elle est toujours la même : une fois comprise, on l'applique à tous les verbes.",
+   "dialogue": [
+    {
+     "who": "أ",
+     "ar": "ماذا تَفْعَل في المَدْرَسة ؟",
+     "tnLat": "chnowa ta3mel fil madrsa ?",
+     "fr": "Que fais-tu à l'école ?"
+    },
+    {
+     "who": "ب",
+     "ar": "أَقْرَأ وَأَكْتُب. وَأَلْعَب مَعَ صَديقي.",
+     "tnLat": "naqra w nekteb, w nel3ab m3a sa7bi",
+     "fr": "Je lis et j'écris. Et je joue avec mon ami."
+    },
+    {
+     "who": "أ",
+     "ar": "هَلِ الدَّرْس سَهْل ؟",
+     "tnLat": "ed-dars séhel ?",
+     "fr": "La leçon est-elle facile ?"
+    },
+    {
+     "who": "ب",
+     "ar": "لا، الدَّرْس صَعْب، لَكِنَّ المُعَلِّمة جَميلة.",
+     "tnLat": "la, ed-dars s3ib, ama el m3allma mezyena.",
+     "fr": "Non, la leçon est difficile, mais la maîtresse est jolie."
+    }
+   ],
+   "dialogueNote": "",
+   "exercises": [
+    "**Lecture :** lire la liste, puis vider son cartable sur la table et nommer chaque objet en standard.",
+    "**Écriture :** écrire trois phrases sur son école : « mon école est grande », « mon ami s'appelle... », « je lis un livre » (مَدْرَسَتي كَبيرة / صَديقي اسْمُهُ ... / أَقْرَأ كِتاباً).",
+    "**Transformer :** passer du standard au tunisien à l'oral : أَقْرَأ → naqra / أَكْتُب → ..... / أَلْعَب → ..... / آكُل → .....",
+    "**Oral :** raconter sa journée à papa en tunisien avec au moins 4 mots de la liste."
+   ],
+   "defi": "À la sortie de l'école, papa demande « chnowa 3malt el youm ? » (qu'est-ce que tu as fait aujourd'hui ?). La réponse doit contenir au moins un verbe en arabe."
+  },
+  {
+   "id": "u9",
+   "num": 9,
+   "title": "Les jours, le temps qu'il fait",
+   "icon": "☀️",
+   "color": "#E0528F",
+   "goal": "À la fin de la semaine, les enfants disent quel jour on est, situent hier et demain, et décrivent la météo en une phrase.",
+   "vocab": [
+    {
+     "id": "u9w1",
+     "fr": "Lundi",
+     "ar": "الاِثْنَيْن",
+     "lat": "al-ithnayn",
+     "tn": "الاثنين",
+     "tnLat": "lethnin"
+    },
+    {
+     "id": "u9w2",
+     "fr": "Mardi",
+     "ar": "الثُّلاثاء",
+     "lat": "ath-thoulatha'",
+     "tn": "الثلاثة",
+     "tnLat": "ethlétha"
+    },
+    {
+     "id": "u9w3",
+     "fr": "Mercredi",
+     "ar": "الأَرْبِعاء",
+     "lat": "al-arbi3a'",
+     "tn": "الأربعة",
+     "tnLat": "larb3a"
+    },
+    {
+     "id": "u9w4",
+     "fr": "Jeudi",
+     "ar": "الخَميس",
+     "lat": "al-khamis",
+     "tn": "الخميس",
+     "tnLat": "lekhmis"
+    },
+    {
+     "id": "u9w5",
+     "fr": "Vendredi",
+     "ar": "الجُمُعة",
+     "lat": "al-joumou3a",
+     "tn": "الجمعة",
+     "tnLat": "ejjem3a"
+    },
+    {
+     "id": "u9w6",
+     "fr": "Samedi",
+     "ar": "السَّبْت",
+     "lat": "as-sabt",
+     "tn": "السبت",
+     "tnLat": "essebt"
+    },
+    {
+     "id": "u9w7",
+     "fr": "Dimanche",
+     "ar": "الأَحَد",
+     "lat": "al-ahad",
+     "tn": "الأحد",
+     "tnLat": "la7ad"
+    },
+    {
+     "id": "u9w8",
+     "fr": "Aujourd'hui",
+     "ar": "اليَوْم",
+     "lat": "al-yawm",
+     "tn": "اليوم",
+     "tnLat": "el youm"
+    },
+    {
+     "id": "u9w9",
+     "fr": "Hier / demain",
+     "ar": "أَمْس / غَداً",
+     "lat": "ams / ghadan",
+     "tn": "البارح / غدوة",
+     "tnLat": "el béra7 / ghodwa"
+    },
+    {
+     "id": "u9w10",
+     "fr": "Matin / soir",
+     "ar": "صَباح / مَساء",
+     "lat": "sabah / masa'",
+     "tn": "الصباح / العشيّة",
+     "tnLat": "es-sbé7 / el 3chiya"
+    },
+    {
+     "id": "u9w11",
+     "fr": "Il fait chaud",
+     "ar": "الجَوّ حارّ",
+     "lat": "al-jaww harr",
+     "tn": "الدنيا سخونة",
+     "tnLat": "ed-denya skhouna",
+     "emoji": "🥵"
+    },
+    {
+     "id": "u9w12",
+     "fr": "Il fait froid",
+     "ar": "الجَوّ بارِد",
+     "lat": "al-jaww barid",
+     "tn": "الدنيا باردة",
+     "tnLat": "ed-denya bérda",
+     "emoji": "🥶"
+    },
+    {
+     "id": "u9w13",
+     "fr": "Il pleut",
+     "ar": "تُمْطِر",
+     "lat": "toumtir",
+     "tn": "الشتاء تصبّ",
+     "tnLat": "ech-chté tsobb",
+     "emoji": "🌧️"
+    },
+    {
+     "id": "u9w14",
+     "fr": "Soleil",
+     "ar": "شَمْس",
+     "lat": "chams",
+     "tn": "شمس",
+     "tnLat": "chams",
+     "emoji": "☀️"
+    }
+   ],
+   "notes": "Les jours de la semaine sont bâtis sur les nombres de la leçon 3 : lundi = « le deuxième » (ithnayn), mardi = « le troisième » (thoulatha), mercredi = « le quatrième » (arbi3a), jeudi = « le cinquième » (khamis). Dimanche = « le premier » (ahad). Seuls vendredi (joumou3a, le jour du rassemblement) et samedi (sabt) sortent du rang.",
+   "dialogue": [
+    {
+     "who": "أ",
+     "ar": "ما هُوَ اليَوْم ؟",
+     "tnLat": "chnowa el youm ?",
+     "fr": "Quel jour sommes-nous ?"
+    },
+    {
+     "who": "ب",
+     "ar": "اليَوْم السَّبْت.",
+     "tnLat": "el youm essebt",
+     "fr": "Aujourd'hui, c'est samedi."
+    },
+    {
+     "who": "أ",
+     "ar": "وَكَيْفَ الجَوّ ؟",
+     "tnLat": "w kifech ed-denya ?",
+     "fr": "Et quel temps fait-il ?"
+    },
+    {
+     "who": "ب",
+     "ar": "الجَوّ حارّ، وَالشَّمْس جَميلة. غَداً الأَحَد، لا مَدْرَسة !",
+     "tnLat": "ed-denya skhouna, w ech-chams mezyena. Ghodwa la7ad, mafamech madrsa !",
+     "fr": "Il fait chaud et le soleil est beau. Demain, c'est dimanche : pas d'école !"
+    }
+   ],
+   "dialogueNote": "",
+   "exercises": [
+    "**Lecture :** lire les jours dans l'ordre, puis en commençant par le jour actuel.",
+    "**Écriture :** faire un calendrier de la semaine dans le cahier, un jour par ligne en standard, et dessiner la météo du jour à côté.",
+    "**Compléter :** اليَوْم ..... / أَمْس كانَ ..... / غَداً ..... (avec les bons jours).",
+    "**Oral :** chaque matin, avant le petit-déjeuner, dire en tunisien : le jour, le temps qu'il fait, école ou pas école."
+   ],
+   "defi": "Tenir la météo de la famille : un enfant est chargé d'annoncer chaque matin « el youm ..., ed-denya ... » à toute la maison. On change de présentateur chaque jour."
+  },
+  {
+   "id": "u10",
+   "num": 10,
+   "title": "Les verbes de tous les jours",
+   "icon": "🏃",
+   "color": "#6C5CE7",
+   "goal": "À la fin de la semaine, les enfants disent ce qu'ils font (je vais, je dors, je regarde) et ce qu'ils veulent faire, à la première et à la deuxième personne.",
+   "vocab": [
+    {
+     "id": "u10w1",
+     "fr": "Aller",
+     "ar": "أَذْهَب / تَذْهَب",
+     "lat": "adhhab / tadhhab",
+     "tn": "نمشي / تمشي",
+     "tnLat": "nemchi / temchi",
+     "emoji": "🚶"
+    },
+    {
+     "id": "u10w2",
+     "fr": "Venir",
+     "ar": "آتي / تَأْتي",
+     "lat": "ati / ta'ti",
+     "tn": "نجي / تجي",
+     "tnLat": "nji / tji",
+     "emoji": "🏃"
+    },
+    {
+     "id": "u10w3",
+     "fr": "Dormir",
+     "ar": "أَنام / تَنام",
+     "lat": "anam / tanam",
+     "tn": "نرقد / ترقد",
+     "tnLat": "norqod / torqod",
+     "emoji": "😴"
+    },
+    {
+     "id": "u10w4",
+     "fr": "Se lever",
+     "ar": "أَقوم / تَقوم",
+     "lat": "aqoum / taqoum",
+     "tn": "نقوم / تقوم",
+     "tnLat": "nqoum / tqoum"
+    },
+    {
+     "id": "u10w5",
+     "fr": "Regarder",
+     "ar": "أُشاهِد / تُشاهِد",
+     "lat": "ouchahid / touchahid",
+     "tn": "نتفرّج / تتفرّج",
+     "tnLat": "netfarrej / tetfarrej",
+     "emoji": "👀"
+    },
+    {
+     "id": "u10w6",
+     "fr": "Écouter",
+     "ar": "أَسْمَع / تَسْمَع",
+     "lat": "asma3 / tasma3",
+     "tn": "نسمع / تسمع",
+     "tnLat": "nesma3 / tesma3",
+     "emoji": "🎧"
+    },
+    {
+     "id": "u10w7",
+     "fr": "Parler",
+     "ar": "أَتَكَلَّم / تَتَكَلَّم",
+     "lat": "atakallam / tatakallam",
+     "tn": "نحكي / تحكي",
+     "tnLat": "na7ki / ta7ki",
+     "emoji": "🗣️"
+    },
+    {
+     "id": "u10w8",
+     "fr": "Faire",
+     "ar": "أَفْعَل / تَفْعَل",
+     "lat": "af3al / taf3al",
+     "tn": "نعمل / تعمل",
+     "tnLat": "na3mel / ta3mel"
+    },
+    {
+     "id": "u10w9",
+     "fr": "Aider",
+     "ar": "أُساعِد / تُساعِد",
+     "lat": "ousa3id / tousa3id",
+     "tn": "نعاون / تعاون",
+     "tnLat": "n3awen / t3awen",
+     "emoji": "🙌"
+    },
+    {
+     "id": "u10w10",
+     "fr": "Attendre",
+     "ar": "أَنْتَظِر / تَنْتَظِر",
+     "lat": "antadhir / tantadhir",
+     "tn": "نستنّى / تستنّى",
+     "tnLat": "nestanna / testanna",
+     "emoji": "⏳"
+    },
+    {
+     "id": "u10w11",
+     "fr": "Maintenant",
+     "ar": "الآن",
+     "lat": "al-an",
+     "tn": "توّة",
+     "tnLat": "tawa",
+     "emoji": "⌚"
+    },
+    {
+     "id": "u10w12",
+     "fr": "Après, plus tard",
+     "ar": "بَعْدَ ذَلِك",
+     "lat": "ba3da dhalik",
+     "tn": "بعد",
+     "tnLat": "ba3d"
+    },
+    {
+     "id": "u10w13",
+     "fr": "Vite / doucement",
+     "ar": "بِسُرْعة / بِبُطْء",
+     "lat": "bisour3a / biboute'",
+     "tn": "فيسع / بشويّة",
+     "tnLat": "fissa3 / bechwaya",
+     "emoji": "🐇"
+    }
+   ],
+   "notes": "La règle des personnes, valable dans les deux langues pour tous les verbes du cours :\n\n| Personne | Standard | Tunisien |\n| --- | --- | --- |\n| Je | أ au début (أَذْهَب) | ن au début (nemchi) |\n| Tu | ت au début (تَذْهَب) | ت au début (temchi) |\n| Il | ي au début (يَذْهَب) | ي au début (yemchi) |\n| Elle | ت au début (تَذْهَب) | ت au début (temchi) |\n| Nous | ن au début (نَذْهَب) | ن au début + و à la fin (nemchiou) |\n\nLe piège : le ن du « je » tunisien ressemble au ن du « nous » standard. Pour ne pas les confondre, les enfants n'écrivent que le standard.",
+   "dialogue": [
+    {
+     "who": "أ",
+     "ar": "ماذا تَفْعَل الآن ؟",
+     "tnLat": "chnowa ta3mel tawa ?",
+     "fr": "Que fais-tu maintenant ?"
+    },
+    {
+     "who": "ب",
+     "ar": "أُشاهِد التِّلْفاز. وَأَنْتَ ؟",
+     "tnLat": "netfarrej fil talfza, w enti ?",
+     "fr": "Je regarde la télévision. Et toi ?"
+    },
+    {
+     "who": "أ",
+     "ar": "أَذْهَب إِلى غُرْفَتي، أُريد أَنْ أَنام.",
+     "tnLat": "nemchi l biti, n7eb norqod",
+     "fr": "Je vais dans ma chambre, je veux dormir."
+    },
+    {
+     "who": "ب",
+     "ar": "اِنْتَظِر ! ساعِدْني مِنْ فَضْلِك.",
+     "tnLat": "estanna ! 3awenni y3aychek.",
+     "fr": "Attends ! Aide-moi, s'il te plaît."
+    }
+   ],
+   "dialogueNote": "",
+   "exercises": [
+    "**Lecture :** lire la colonne « je », puis la colonne « tu », puis papa dit un verbe en tunisien et l'enfant trouve le standard.",
+    "**Écriture :** écrire sa journée en 5 phrases standard avec 5 verbes différents : je me lève, je vais à l'école, je lis, je mange, je dors.",
+    "**Conjuguer :** passer de « je » à « il » en changeant la première lettre : أَذْهَب → يَذْهَب / أَنام → ..... / أَسْمَع → ..... / آكُل → يَأْكُل.",
+    "**Oral :** le mime : un enfant mime un verbe, l'autre le dit en tunisien, papa valide."
+   ],
+   "defi": "Les demandes à papa se font en arabe : « 3awenni » (aide-moi), « estanna » (attends), « nemchi nel3ab ? » (je vais jouer ?). Une demande en français reçoit un « ma fhemtech » (je n'ai pas compris) et un sourire."
+  },
+  {
+   "id": "u11",
+   "num": 11,
+   "title": "Poser des questions",
+   "icon": "❓",
+   "color": "#F0803C",
+   "goal": "À la fin de la semaine, les enfants posent eux-mêmes les questions au lieu d'y répondre : qui, quoi, où, quand, pourquoi, comment, combien. C'est la leçon qui rend une conversation possible.",
+   "vocab": [
+    {
+     "id": "u11w1",
+     "fr": "Qui ?",
+     "ar": "مَنْ ؟",
+     "lat": "man ?",
+     "tn": "شكون ؟",
+     "tnLat": "chkoun ?"
+    },
+    {
+     "id": "u11w2",
+     "fr": "Quoi ?",
+     "ar": "ماذا ؟ / ما ؟",
+     "lat": "madha ? / ma ?",
+     "tn": "شنوّة ؟",
+     "tnLat": "chnowa ?"
+    },
+    {
+     "id": "u11w3",
+     "fr": "Où ?",
+     "ar": "أَيْنَ ؟",
+     "lat": "ayna ?",
+     "tn": "وين ؟",
+     "tnLat": "win ?"
+    },
+    {
+     "id": "u11w4",
+     "fr": "Quand ?",
+     "ar": "مَتى ؟",
+     "lat": "mata ?",
+     "tn": "وقتاش ؟",
+     "tnLat": "waqtech ?"
+    },
+    {
+     "id": "u11w5",
+     "fr": "Pourquoi ?",
+     "ar": "لِماذا ؟",
+     "lat": "limadha ?",
+     "tn": "علاش ؟",
+     "tnLat": "3lech ?"
+    },
+    {
+     "id": "u11w6",
+     "fr": "Comment ?",
+     "ar": "كَيْفَ ؟",
+     "lat": "kayfa ?",
+     "tn": "كيفاش ؟",
+     "tnLat": "kifech ?"
+    },
+    {
+     "id": "u11w7",
+     "fr": "Combien ?",
+     "ar": "كَمْ ؟",
+     "lat": "kam ?",
+     "tn": "قدّاش ؟",
+     "tnLat": "qaddech ?"
+    },
+    {
+     "id": "u11w8",
+     "fr": "Est-ce que... ?",
+     "ar": "هَلْ... ؟",
+     "lat": "hal... ?",
+     "tn": "",
+     "tnLat": "",
+     "note": "(rien, juste le ton qui monte)"
+    },
+    {
+     "id": "u11w9",
+     "fr": "Parce que",
+     "ar": "لِأَنَّ",
+     "lat": "li'anna",
+     "tn": "على خاطر",
+     "tnLat": "3ala khater"
+    },
+    {
+     "id": "u11w10",
+     "fr": "Je ne sais pas",
+     "ar": "لا أَعْرِف",
+     "lat": "la a3rif",
+     "tn": "ما نعرفش",
+     "tnLat": "ma na3rafch"
+    },
+    {
+     "id": "u11w11",
+     "fr": "Je n'ai pas compris",
+     "ar": "لَمْ أَفْهَم",
+     "lat": "lam afham",
+     "tn": "ما فهمتش",
+     "tnLat": "ma fhemtech"
+    },
+    {
+     "id": "u11w12",
+     "fr": "Répète, s'il te plaît",
+     "ar": "أَعِدْ مِنْ فَضْلِك",
+     "lat": "a3id min fadlik",
+     "tn": "عاود يعيّشك",
+     "tnLat": "3awed y3aychek"
+    }
+   ],
+   "notes": "Toutes les questions tunisiennes finissent par « -ch » ou « -ech » (chnowa est l'exception) : waqtech, 3lech, kifech, qaddech. Retenir ce son, c'est retenir la moitié de la leçon. Et la négation tunisienne, c'est ما... ـش autour du verbe : ma na3rafch, ma fhemtech.",
+   "dialogue": [
+    {
+     "who": "أ",
+     "ar": "إِلى أَيْنَ تَذْهَب ؟",
+     "tnLat": "win temchi ?",
+     "fr": "Où vas-tu ?"
+    },
+    {
+     "who": "ب",
+     "ar": "أَذْهَب إِلى المَدْرَسة.",
+     "tnLat": "nemchi lel madrsa",
+     "fr": "Je vais à l'école."
+    },
+    {
+     "who": "أ",
+     "ar": "مَتى ؟ وَمَعَ مَنْ ؟",
+     "tnLat": "waqtech ? w m3a chkoun ?",
+     "fr": "Quand ? Et avec qui ?"
+    },
+    {
+     "who": "ب",
+     "ar": "الآن، مَعَ أَخي. لِماذا تَسْأَل ؟",
+     "tnLat": "tawa, m3a khouya. 3lech tes'el ?",
+     "fr": "Maintenant, avec mon frère. Pourquoi tu demandes ?"
+    },
+    {
+     "who": "أ",
+     "ar": "لِأَنّي أُريد أَنْ آتي مَعَكُم !",
+     "tnLat": "3ala khater n7eb nji m3akom !",
+     "fr": "Parce que je veux venir avec vous !"
+    }
+   ],
+   "dialogueNote": "",
+   "exercises": [
+    "**Lecture :** lire les mots interrogatifs, puis relire les dialogues des leçons 1 à 10 en ne lisant que les questions.",
+    "**Écriture :** écrire en standard 5 questions à poser à papa (où tu vas, quand tu rentres, qu'est-ce qu'on mange...). Papa répond par écrit en standard.",
+    "**Associer :** relier chaque question à sa réponse : مَنْ هَذا ؟ / أَيْنَ الكِتاب ؟ / كَمْ عُمْرُكَ ؟ / مَتى تَنام ؟ avec هَذا جَدّي / عَلى الطّاوِلة / عُمْري تِسْعُ سَنَوات / في المَساء.",
+    "**Oral :** l'interrogatoire : chaque enfant a 2 minutes pour poser un maximum de questions en tunisien à papa, qui répond en tunisien. On compte les questions correctes."
+   ],
+   "defi": "Les enfants deviennent journalistes : ils interviewent un membre de la famille (en vrai ou en visio) avec 5 questions en arabe, et rapportent les réponses à table."
+  },
+  {
+   "id": "u12",
+   "num": 12,
+   "title": "Bilan et mini-conversation complète",
+   "icon": "🏆",
+   "color": "#16875A",
+   "goal": "Pas de nouveau vocabulaire cette semaine : on assemble tout pour tenir une conversation de deux minutes, à lire d'abord, puis à jouer sans le texte.",
+   "vocab": [],
+   "notes": "",
+   "dialogue": [
+    {
+     "who": "أ",
+     "ar": "السَّلامُ عَلَيْكُم ! كَيْفَ حالُكَ ؟",
+     "tnLat": "3asslema ! chniya a7walek ?",
+     "fr": "Bonjour ! Comment vas-tu ?"
+    },
+    {
+     "who": "ب",
+     "ar": "وَعَلَيْكُمُ السَّلام. أَنا بِخَيْر، شُكْراً. وَأَنْتَ ؟",
+     "tnLat": "3asslema, ana labès y3aychek, w enti ?",
+     "fr": "Bonjour. Je vais bien, merci. Et toi ?"
+    },
+    {
+     "who": "أ",
+     "ar": "أَنا تَعْبان قَليلاً. ماذا تَفْعَل اليَوْم ؟",
+     "tnLat": "ana 3ayyén chwaya. chnowa ta3mel el youm ?",
+     "fr": "Je suis un peu fatigué. Que fais-tu aujourd'hui ?"
+    },
+    {
+     "who": "ب",
+     "ar": "اليَوْم السَّبْت، لا مَدْرَسة. أَلْعَب في البَيْت مَعَ أُخْتي.",
+     "tnLat": "el youm essebt, mafamech madrsa. nel3ab fid-dar m3a okhti",
+     "fr": "Aujourd'hui, c'est samedi, pas d'école. Je joue à la maison avec ma sœur."
+    },
+    {
+     "who": "أ",
+     "ar": "وَماذا تَأْكُل ؟",
+     "tnLat": "w chnowa tékel ?",
+     "fr": "Et que manges-tu ?"
+    },
+    {
+     "who": "ب",
+     "ar": "آكُل خُبْزاً وَبَيْضاً، وَأَشْرَب حَليباً. هَذا لَذيذ !",
+     "tnLat": "nékel khobz w 3dham, w nochrob 7lib. bnin !",
+     "fr": "Je mange du pain et des œufs, et je bois du lait. C'est délicieux !"
+    },
+    {
+     "who": "أ",
+     "ar": "كَمْ عُمْرُ أُخْتِكَ ؟",
+     "tnLat": "qaddech 3omr okhtek ?",
+     "fr": "Quel âge a ta sœur ?"
+    },
+    {
+     "who": "ب",
+     "ar": "عُمْرُها تِسْعُ سَنَوات. هِيَ صَغيرة وَجَميلة.",
+     "tnLat": "3omrha tes3a snin. hiya sghira w mezyena",
+     "fr": "Elle a neuf ans. Elle est petite et jolie."
+    },
+    {
+     "who": "أ",
+     "ar": "أَيْنَ هِيَ الآن ؟",
+     "tnLat": "win hiya tawa ?",
+     "fr": "Où est-elle maintenant ?"
+    },
+    {
+     "who": "ب",
+     "ar": "في غُرْفَتِها، تُشاهِد التِّلْفاز.",
+     "tnLat": "fi bitha, tetfarrej fil talfza",
+     "fr": "Dans sa chambre, elle regarde la télévision."
+    },
+    {
+     "who": "أ",
+     "ar": "حَسَناً، مَعَ السَّلامة !",
+     "tnLat": "béhi, bslema !",
+     "fr": "Bien, au revoir !"
+    },
+    {
+     "who": "ب",
+     "ar": "مَعَ السَّلامة !",
+     "tnLat": "bslema !",
+     "fr": "Au revoir !"
+    }
+   ],
+   "dialogueNote": "",
+   "exercises": [],
+   "defi": "",
+   "parcours": "| Jour | Durée | Objectif |\n| --- | --- | --- |\n| Mardi | 20 min | Lire la conversation en standard, deux fois, en changeant de rôle |\n| Jeudi | 20 min | Recopier ses propres répliques dans le cahier, puis en modifier trois (changer le jour, l'aliment, l'âge) |\n| Samedi | 45 min | 10 min de memory sur le lexique des 40 mots, 20 min de conversation jouée en tunisien avec papa sans le texte, 15 min d'auto-évaluation et de choix du prochain thème |",
+   "checklist": [
+    "Je sais saluer et dire au revoir",
+    "Je sais dire mon nom, mon âge, et présenter ma famille",
+    "Je compte jusqu'à 10 et je dis les jours de la semaine",
+    "Je nomme 6 couleurs et je décris un objet (grand, petit, nouveau)",
+    "Je demande à manger et à boire, et je dis que c'est bon",
+    "Je nomme les pièces de la maison et je dis où est un objet",
+    "Je dis comment je me sens et où j'ai mal",
+    "Je raconte ma journée d'école avec 3 verbes",
+    "Je pose 5 questions différentes",
+    "Je tiens la conversation modèle en tunisien sans lire"
+   ],
+   "apres": "Si les dix cases sont cochées, les enfants ont environ 150 mots et les structures de base. La suite logique : une leçon par mois sur un thème de leur choix (jeux vidéo, sport, vacances en Tunisie), construite sur le même modèle, et surtout du tunisien tous les jours à la maison. La lecture s'accélère seule avec la répétition ; ce sont les 20 minutes d'oral par semaine qui font la vraie différence."
+  }
+ ]
+}
