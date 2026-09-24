@@ -198,7 +198,10 @@ const LAT = w => store.settings.showLat && w.lat ? `<div class="lat">${esc(w.lat
 
 function bindSpeak(el) {
   el.querySelectorAll('[data-say]').forEach(b => b.addEventListener('click', e => {
-    e.stopPropagation(); tts.speak(b.dataset.say, { slow: b.classList.contains('slow') });
+    e.stopPropagation();
+    const box = b.closest('.bubble, .card-intro, .tnbox, .vrow');
+    const el = box && [...box.querySelectorAll('.ar')].find(x => (x.dataset.karaText ?? x.textContent).trim() === b.dataset.say.trim());
+    tts.speak(b.dataset.say, { slow: b.classList.contains('slow'), el });
   }));
 }
 
@@ -223,7 +226,7 @@ const R = {
       <div class="choices ${ex.pic ? 'grid' : ''}">${ex.opts.map((o, i) => ex.pic
         ? `<button class="choice pic" data-i="${i}"><span class="emo">${o.emoji}</span>${arSpan(o.ar)}</button>`
         : `<button class="choice" data-i="${i}"><span class="k">${i + 1}</span>${arSpan(o.ar)}</button>`).join('')}</div></div>`);
-    return choiceLogic(el, ex, ready, o => o === ex.w, o => tts.speak(o.ar));
+    return choiceLogic(el, ex, ready, o => o === ex.w, (o, b) => tts.speak(o.ar, { el: b.querySelector('.ar') }));
   },
 
   pickFr(ex, ready) {
@@ -258,7 +261,7 @@ const R = {
       <div class="prompt">${mascot('happy')}<div class="bubble">🇹🇳 <b>${esc(w.tnLat)}</b>${w.tn ? ' ' + arSpan(w.tn) : ''}</div></div>
       <div class="choices grid">${ex.opts.map((o, i) => `<button class="choice" data-i="${i}">${arSpan(o.ar)}</button>`).join('')}</div></div>`);
     if (store.settings.speakTn && w.tn) setTimeout(() => tts.speak(w.tn), 250);
-    return choiceLogic(el, ex, ready, o => o === w, o => tts.speak(o.ar));
+    return choiceLogic(el, ex, ready, o => o === w, (o, b) => tts.speak(o.ar, { el: b.querySelector('.ar') }));
   },
 
   std2tn(ex, ready) {
@@ -279,7 +282,7 @@ const R = {
     let sel = null, left = ex.pairs.length;
     el.querySelectorAll('.choice').forEach(b => b.addEventListener('click', () => {
       if (b.classList.contains('gone')) return;
-      if (b.dataset.side === 'l') tts.speak(ex.pairs.find(w => w.id === b.dataset.id).ar);
+      if (b.dataset.side === 'l') tts.speak(ex.pairs.find(w => w.id === b.dataset.id).ar, { el: b.querySelector('.ar') });
       if (!sel || sel.dataset.side === b.dataset.side) {
         el.querySelectorAll(`.choice[data-side="${b.dataset.side}"]`).forEach(x => x.classList.remove('sel'));
         b.classList.add('sel'); sel = b; return;
@@ -377,7 +380,7 @@ function choiceLogic(el, ex, ready, isRight, onTap, afterCheck, solKey) {
   bindSpeak(el);
   el.querySelectorAll('.choice').forEach(b => b.addEventListener('click', () => {
     el.querySelectorAll('.choice').forEach(x => x.classList.remove('sel'));
-    b.classList.add('sel'); chosen = ex.opts[+b.dataset.i]; sfx.tap(); onTap && onTap(chosen); ready(true);
+    b.classList.add('sel'); chosen = ex.opts[+b.dataset.i]; sfx.tap(); onTap && onTap(chosen, b); ready(true);
   }));
   ready(false);
   return {

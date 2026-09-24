@@ -295,3 +295,12 @@ textarea.input{min-height:90px;resize:vertical;line-height:1.5}
   .card-intro .emo{font-size:56px}.card-intro .ar{font-size:44px}
   .bigspeak .speak{width:90px;height:90px}
 }
+
+/* karaoké */
+.kara .kw{color:transparent;-webkit-background-clip:text;background-clip:text;
+  background-image:linear-gradient(to left,var(--hl,#FF8A00) 50%,var(--kc,#2F3437) 50%);
+  background-size:200% 100%;background-position:0 0;transition:background-position 0ms linear;
+  display:inline-block;transition-property:background-position,transform;padding:0 .02em}
+.kara .kw.on{background-position:100% 0}
+.kara .kw.cur{transform:translateY(-3px) scale(1.06)}
+.choice.sel .kara, .choice.ok .kara{--hl:#E86A00}

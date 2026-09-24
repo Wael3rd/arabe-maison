@@ -272,6 +272,7 @@ function settings(main) {
     ${sw('mic', 'Exercices de prononciation (micro)', 'Reconnaissance vocale de Chrome, ne fait jamais perdre de cœur.')}
     ${sw('speakTn', 'Lire aussi le tunisien à voix haute', 'Avec la voix arabe standard : prononciation approximative.')}
     ${sw('showLat', 'Afficher la lecture en lettres latines')}
+    ${sw('karaoke', 'Mode karaoké', 'Les mots s’allument au fur et à mesure de la lecture.')}
     ${sw('unlockAll', 'Débloquer tout le parcours', 'Pour sauter des étapes ou suivre le rythme des séances papa.')}
     <div class="field" style="margin-top:12px"><label>Objectif quotidien</label><select class="input" data-goal>${[10, 20, 30, 50].map(n => `<option ${n === s.dailyGoal ? 'selected' : ''} value="${n}">${n} XP par jour</option>`).join('')}</select></div>
   </div>
