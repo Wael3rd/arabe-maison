@@ -12,13 +12,13 @@ function save(key, val) {
 
 export const DEFAULT_SETTINGS = {
   voiceURI: '', rate: 0.85, hearts: true, dailyGoal: 20, mic: true, sounds: true,
-  unlockAll: false, speakTn: true, showLat: true, karaoke: true, karaOffset: 350,
+  unlockAll: false, speakTn: true, showLat: true, karaoke: true, karaOffset: 350, karaScale: 1, karaAuto: true, slowRate: 0.5,
 };
 
 export const store = {
   content: null, published: null, usingDraft: false,
   profiles: load(K.profiles, []),
-  settings: { ...DEFAULT_SETTINGS, ...load(K.settings, {}) },
+  settings: { ...DEFAULT_SETTINGS, karaScale: (() => { try { return +(localStorage.getItem('ar.karaScale') || 1); } catch { return 1; } })(), ...load(K.settings, {}) },
   currentId: load(K.current, null),
 
   async loadContent() {

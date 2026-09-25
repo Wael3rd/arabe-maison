@@ -13,8 +13,11 @@ function findTarget(text) {
 
 const kara = {
   el: null, spans: [], timers: [], idx: 0, t0: 0, est: 0,
-  scale: (() => { try { return +localStorage.getItem('ar.karaScale') || 1; } catch { return 1; } })(),
-  dur(span, rate) { return this.scale * (Math.max(1, normAr(span.textContent).length) * 85 + 140) / rate; },
+  get scale() { return +store.settings.karaScale || 1; },
+  set scale(v) { store.settings.karaScale = +v.toFixed(3); store.saveSettings(); },
+  lastBmode: false,
+  dur1(word, rate) { return (Math.max(1, normAr(word).length) * 85 + 140) / rate; },
+  dur(span, rate) { return this.scale * this.dur1(span.textContent, rate); },
   prepare(el) {
     if (el.dataset.karaText === undefined) el.dataset.karaText = el.textContent;
     const text = el.dataset.karaText;
@@ -72,9 +75,9 @@ const kara = {
     u.addEventListener('end', () => {
       if (!mine()) return;
       const real = performance.now() - this.t0 - off();
-      if (!this.bmode && this.t0 && this.est > 0 && real > 200) {
+      this.lastBmode = this.bmode;
+      if (store.settings.karaAuto !== false && !this.bmode && this.t0 && this.est > 0 && real > 200) {
         this.scale = Math.min(3, Math.max(0.35, this.scale * (0.7 + 0.3 * real / this.est)));
-        try { localStorage.setItem('ar.karaScale', this.scale.toFixed(3)); } catch {}
       }
       this.clearTimers(); this.spans.forEach(sp => { this.fill(sp, 120); sp.classList.remove('cur'); });
       const el0 = this.el;
@@ -114,6 +117,7 @@ if (synth) {
   synth.addEventListener?.('voiceschanged', refresh);
 }
 
+export { kara };
 export const tts = {
   get supported() { return !!synth; },
   arabicVoices() {
@@ -128,7 +132,7 @@ export const tts = {
       || list[0] || null;
   },
   /** Lit un texte arabe. slow = mode tortue. el = élément à surligner (karaoké), trouvé tout seul sinon. */
-  speak(text, { slow = false, rate, el } = {}) {
+  speak(text, { slow = false, rate, el, noKara = false, onStart, onEnd } = {}) {
     if (!synth || !text) return Promise.resolve();
     return new Promise(res => {
       try {
@@ -137,8 +141,10 @@ export const tts = {
         const u = new SpeechSynthesisUtterance(text.replace(/\.\.\./g, ''));
         const v = this.voice();
         if (v) { u.voice = v; u.lang = v.lang; } else u.lang = 'ar-SA';
-        u.rate = rate ?? (slow ? 0.5 : store.settings.rate);
-        const target = store.settings.karaoke !== false ? (el || findTarget(text)) : null;
+        u.rate = rate ?? (slow ? (store.settings.slowRate || 0.5) : store.settings.rate);
+        const target = !noKara && store.settings.karaoke !== false ? (el || findTarget(text)) : null;
+        if (onStart) u.addEventListener('start', () => onStart(performance.now()));
+        if (onEnd) u.addEventListener('end', () => onEnd(performance.now()));
         if (target) kara.attach(u, target, text);
         let done = false;
         const finish = () => { if (done) return; done = true; res(); };

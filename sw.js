@@ -1,8 +1,8 @@
 // Service worker : l'appli marche hors ligne ; content.json est toujours rafraîchi quand le réseau est là.
-const VERSION = 'arabe-v3';
+const VERSION = 'arabe-v4';
 const SHELL = [
   './', 'index.html', 'manifest.webmanifest', 'css/app.css',
-  'js/app.js', 'js/engine.js', 'js/parent.js', 'js/store.js', 'js/tts.js', 'js/util.js',
+  'js/app.js', 'js/engine.js', 'js/parent.js', 'js/store.js', 'js/tts.js', 'js/util.js', 'js/sync.js',
   'content.json', 'icons/icon-192.png', 'icons/icon-512.png',
   'fonts/noto-naskh-arabic-arabic-400-normal.woff2', 'fonts/noto-naskh-arabic-arabic-700-normal.woff2',
   'fonts/nunito-latin-400-normal.woff2', 'fonts/nunito-latin-700-normal.woff2',

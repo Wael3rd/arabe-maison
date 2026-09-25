@@ -2,6 +2,7 @@
 import { esc, h, md, modal, toast, ask, sha256, arWrap, sfx } from './util.js';
 import { store } from './store.js';
 import { tts } from './tts.js';
+import { openSync } from './sync.js';
 
 /* ---------------- code parent ---------------- */
 export function requirePin() {
@@ -263,8 +264,9 @@ function settings(main) {
     <h3>🔊 Voix arabe</h3>
     ${voices.length ? `<select class="input" data-voice style="margin-top:10px"><option value="">Automatique</option>${voices.map(v => `<option value="${esc(v.voiceURI)}" ${v.voiceURI === s.voiceURI ? 'selected' : ''}>${esc(v.name)} (${esc(v.lang)})</option>`).join('')}</select>`
       : `<div class="tip">Aucune voix arabe trouvée sur cet appareil. Sur Android : <b>Paramètres › Accessibilité › Synthèse vocale</b> (ou <b>Système › Langues › Synthèse vocale</b>), moteur <b>Google</b>, puis ⚙️ › <b>Installer les données vocales</b> › Arabe. Redémarre ensuite l’appli.</div>`}
-    <div class="field"><label>Vitesse normale : <span data-rv>${s.rate}</span></label><input type="range" min="0.5" max="1.2" step="0.05" value="${s.rate}" data-rate></div>
-    <div style="display:flex;gap:10px"><button class="btn small blue" data-test>▶️ Tester</button><button class="btn small ghost" data-testtn>▶️ Tester le tunisien</button></div>
+    <button class="btn blue block" data-sync style="margin-top:14px">🎚️ Synchro voix et karaoké</button>
+    <p class="muted" style="margin:8px 0 0;font-size:14px">Vitesse de lecture, départ et rythme du surlignage, réglage au doigt.</p>
+    <div style="display:flex;gap:10px;margin-top:10px"><button class="btn small ghost" data-test>▶️ Tester la voix</button><button class="btn small ghost" data-testtn>▶️ Tester le tunisien</button></div>
   </div>
   <div class="card" style="margin-top:14px">
     ${sw('hearts', 'Cœurs', '5 cœurs, un de moins par erreur, un revient toutes les 30 min.')}
@@ -273,9 +275,6 @@ function settings(main) {
     ${sw('speakTn', 'Lire aussi le tunisien à voix haute', 'Avec la voix arabe standard : prononciation approximative.')}
     ${sw('showLat', 'Afficher la lecture en lettres latines')}
     ${sw('karaoke', 'Mode karaoké', 'Les mots s’allument au fur et à mesure de la lecture.')}
-    <div class="field" style="margin-top:10px"><label>Décalage du karaoké : <span data-ov>${s.karaOffset}</span> ms (augmente si l’orange part avant le son)</label>
-      <input type="range" min="0" max="1500" step="50" value="${s.karaOffset}" data-off></div>
-    <div style="display:flex;gap:12px;align-items:center"><span class="ar" style="font-size:26px;flex:1" data-sample>السَّلامُ عَلَيْكُم، كَيْفَ حالُكَ ؟</span><button class="btn small blue" data-testk>▶️ Tester</button></div>
     ${sw('unlockAll', 'Débloquer tout le parcours', 'Pour sauter des étapes ou suivre le rythme des séances papa.')}
     <div class="field" style="margin-top:12px"><label>Objectif quotidien</label><select class="input" data-goal>${[10, 20, 30, 50].map(n => `<option ${n === s.dailyGoal ? 'selected' : ''} value="${n}">${n} XP par jour</option>`).join('')}</select></div>
   </div>
@@ -283,11 +282,9 @@ function settings(main) {
     <button class="btn small ghost" data-update>🔄 Rechercher une mise à jour de l’appli</button></div></div>`));
   main.querySelectorAll('[data-s]').forEach(i => i.onchange = () => { s[i.dataset.s] = i.checked; store.saveSettings(); });
   main.querySelector('[data-voice]')?.addEventListener('change', e => { s.voiceURI = e.target.value; store.saveSettings(); tts.speak('مَرْحَباً'); });
-  main.querySelector('[data-rate]').oninput = e => { s.rate = +e.target.value; main.querySelector('[data-rv]').textContent = s.rate; store.saveSettings(); };
+  main.querySelector('[data-sync]').onclick = () => openSync();
   main.querySelector('[data-test]').onclick = () => tts.speak('السَّلامُ عَلَيْكُم، كَيْفَ حالُكَ ؟');
   main.querySelector('[data-testtn]').onclick = () => tts.speak('عسلامة، شنيّة أحوالك ؟');
-  main.querySelector('[data-off]').oninput = e => { s.karaOffset = +e.target.value; main.querySelector('[data-ov]').textContent = s.karaOffset; store.saveSettings(); };
-  main.querySelector('[data-testk]').onclick = () => tts.speak('السَّلامُ عَلَيْكُم، كَيْفَ حالُكَ ؟', { el: main.querySelector('[data-sample]') });
   main.querySelector('[data-goal]').onchange = e => { s.dailyGoal = +e.target.value; store.saveSettings(); };
   main.querySelector('[data-pin]').onclick = async () => { const old = store.pinHash; store.pinHash = null; if (!(await requirePin())) { store.pinHash = old; toast('Code inchangé'); } else toast('Nouveau code enregistré'); };
   main.querySelector('[data-update]').onclick = async () => {
