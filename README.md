@@ -37,6 +37,17 @@ Le défi se lance le samedi et dure toute la semaine : il ne bloque pas le parco
 
 On peut aussi exporter ou importer le fichier `content.json` à la main.
 
+## Synchroniser la progression entre appareils
+
+La progression des profils (XP, série, étapes, mots) peut être partagée entre plusieurs appareils, par exemple la tablette et un téléphone : chaque enfant passe de l'un à l'autre et voit où en est l'autre (écran « Qui joue ? » et Ligue).
+
+1. Crée un dépôt **privé** `arabe-maison-progression` sur GitHub.
+2. Donne au jeton fine-grained l'accès à ce dépôt (Repository access), en plus du dépôt du cours.
+3. Espace parent › **GitHub** › **Synchroniser maintenant**.
+4. **Jumeler un autre appareil** : ouvre le lien obtenu dans Chrome sur l'autre appareil. Il recopie la configuration GitHub et le code parent ; les profils du même prénom sont fusionnés.
+
+La synchro se fait toute seule (à l'ouverture, après chaque leçon, toutes les 90 secondes). Hors ligne, l'appli continue de marcher et rattrape au retour du réseau. Les XP de chaque appareil s'additionnent, les étapes réussies se cumulent, une remise à zéro ou une suppression de profil s'applique partout.
+
 ## Organisation des fichiers
 
 | Fichier | Rôle |
@@ -46,7 +57,8 @@ On peut aussi exporter ou importer le fichier `content.json` à la main.
 | `js/app.js` | Écrans enfants : profils, parcours, entraînement, ligue, profil |
 | `js/parent.js` | Espace parent : carnet, éditeur, réglages, publication GitHub |
 | `js/store.js` | Progression, XP, série, cœurs (stockés sur l'appareil) |
+| `js/cloud.js` | Synchronisation de la progression entre appareils (dépôt GitHub privé) |
 | `js/tts.js` | Synthèse vocale et reconnaissance vocale du navigateur |
 | `sw.js` | Fonctionnement hors ligne |
 
-La progression des enfants reste sur la tablette (sauvegarde possible dans Espace parent › Enfants).
+Sans synchro, la progression reste sur l'appareil (sauvegarde possible dans Espace parent › Enfants).

@@ -348,14 +348,14 @@ function github(main) {
   </div>
   <div class="card md" style="margin-top:14px">${md(`**Mettre en place la synchro (une seule fois)**
 
-1. Sur github.com : **+** › **New repository**, nom \`${DEFAULT_PROG_REPO}\`, coche **Private**, **Create repository**.
+1. Sur github.com : **+** › **New repository**, nom « ${DEFAULT_PROG_REPO} », coche **Private**, **Create repository**.
 2. Ouvre ton jeton (Settings › Developer settings › Fine-grained tokens › le jeton de la tablette) › **Repository access** : ajoute ce nouveau dépôt à côté du dépôt du cours › **Update**. Le jeton ne change pas.
 3. Ici : **Enregistrer**, puis **Synchroniser maintenant**.
 4. **Jumeler un autre appareil** : envoie-toi le lien (WhatsApp, mail…) et ouvre-le dans Chrome sur le téléphone. Il configure GitHub et le code parent d’un coup. Les profils du même prénom sont fusionnés.`)}</div>
   <div class="card md" style="margin-top:14px">${md(`**Créer le jeton (une seule fois)**
 
 1. Sur github.com : photo de profil › **Settings** › **Developer settings** › **Personal access tokens** › **Fine-grained tokens** › **Generate new token**.
-2. Nom : « arabe tablette », expiration : 1 an. **Repository access** : *Only select repositories* › ton dépôt du cours.
+2. Nom : « arabe tablette », expiration : 1 an. **Repository access** : *Only select repositories* › ton dépôt du cours et le dépôt privé de progression.
 3. **Permissions** › Repository permissions › **Contents : Read and write**. Rien d’autre.
 4. Copie le jeton ici. Il reste uniquement sur cet appareil ; le code parent protège cet écran.`)}</div></div>`));
   const read = () => { const v = { ...store.github }; main.querySelectorAll('[data-g]').forEach(i => v[i.dataset.g] = i.value.trim()); v.path = v.path || 'content.json'; v.branch = v.branch || 'main'; store.github = v; cloud.onStatus?.(); };
