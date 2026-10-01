@@ -7,6 +7,7 @@ import { tts, stt } from './tts.js';
    1. LE PARCOURS
    ========================================================= */
 const NODE_ICON = { learn: '⭐', tn: '🇹🇳', dialogue: '💬', defi: '🎁', review: '🏆', checklist: '✅' };
+export const DAYS = { mardi: ['📖', 'Mardi', '20 min', 'lecture à voix haute'], jeudi: ['✍️', 'Jeudi', '20 min', 'écrit, avec le cahier'], samedi: ['🗣️', 'Samedi', '45 min', 'oral en tunisien'] };
 const NODE_LABEL = { learn: 'Nouveaux mots', tn: 'Parle tunisien', dialogue: 'Dialogue', defi: 'Défi de la semaine', review: "Révision de l'unité", checklist: 'Auto-évaluation' };
 
 export function unitNodes(unit) {
@@ -18,18 +19,19 @@ export function unitNodes(unit) {
     for (let i = 0; i < n; i++) {
       nodes.push({ id: `${unit.id}-learn${i + 1}`, type: 'learn', part: i + 1, of: n, words: v.slice(i * size, (i + 1) * size), before: v.slice(0, i * size) });
     }
-    if (v.some(w => w.tnLat)) nodes.push({ id: `${unit.id}-tn`, type: 'tn' });
-    if (unit.dialogue?.length) nodes.push({ id: `${unit.id}-dialogue`, type: 'dialogue', lines: unit.dialogue });
-    if (unit.defi) nodes.push({ id: `${unit.id}-defi`, type: 'defi' });
-    nodes.push({ id: `${unit.id}-review`, type: 'review' });
+    nodes.forEach(nd => nd.day = 'mardi');
+    if (unit.dialogue?.length) nodes.push({ id: `${unit.id}-dialogue`, type: 'dialogue', lines: unit.dialogue, day: 'jeudi' });
+    if (v.some(w => w.tnLat)) nodes.push({ id: `${unit.id}-tn`, type: 'tn', day: 'samedi' });
+    nodes.push({ id: `${unit.id}-review`, type: 'review', day: 'samedi' });
+    if (unit.defi) nodes.push({ id: `${unit.id}-defi`, type: 'defi', day: 'samedi' });
   } else {
     const d = unit.dialogue || [];
     const half = Math.ceil(d.length / 2);
-    if (d.length) nodes.push({ id: `${unit.id}-conv1`, type: 'dialogue', part: 1, lines: d.slice(0, half) });
-    if (d.length > half) nodes.push({ id: `${unit.id}-conv2`, type: 'dialogue', part: 2, lines: d.slice(half) });
-    nodes.push({ id: `${unit.id}-global`, type: 'review', global: true });
-    if (unit.checklist?.length) nodes.push({ id: `${unit.id}-checklist`, type: 'checklist' });
-    if (unit.defi) nodes.push({ id: `${unit.id}-defi`, type: 'defi' });
+    if (d.length) nodes.push({ id: `${unit.id}-conv1`, type: 'dialogue', part: 1, lines: d.slice(0, half), day: 'mardi' });
+    if (d.length > half) nodes.push({ id: `${unit.id}-conv2`, type: 'dialogue', part: 2, lines: d.slice(half), day: 'jeudi' });
+    nodes.push({ id: `${unit.id}-global`, type: 'review', global: true, day: 'samedi' });
+    if (unit.checklist?.length) nodes.push({ id: `${unit.id}-checklist`, type: 'checklist', day: 'samedi' });
+    if (unit.defi) nodes.push({ id: `${unit.id}-defi`, type: 'defi', day: 'samedi' });
   }
   nodes.forEach(nd => { nd.unit = unit; nd.icon = NODE_ICON[nd.type]; nd.label = NODE_LABEL[nd.type] + (nd.part && nd.of > 1 ? ` ${nd.part}/${nd.of}` : nd.part && nd.type === 'dialogue' && !unit.vocab?.length ? ` ${nd.part}` : ''); });
   return nodes;
@@ -41,12 +43,20 @@ export function nodeState(content, p = store.me) {
   const list = allNodes(content);
   let current = null;
   const state = {};
+  // Le défi dure une semaine entière (lancé le samedi, validé par papa le samedi suivant) :
+  // il s'ouvre dès qu'on l'atteint mais ne bloque jamais la suite du parcours.
+  const pending = [];
   for (const nd of list) {
     if (store.isDone(nd.id, p)) state[nd.id] = 'done';
+    else if (nd.type === 'defi') {
+      const reached = !current || store.settings.unlockAll;
+      state[nd.id] = reached ? 'pending' : 'locked';
+      if (reached) pending.push(nd);
+    }
     else if (!current) { current = nd.id; state[nd.id] = 'current'; }
     else state[nd.id] = store.settings.unlockAll ? 'open' : 'locked';
   }
-  return { list, state, current };
+  return { list, state, current, pending };
 }
 
 export function nodeXp(nd) { return { learn: 10, tn: 10, dialogue: 10, review: 15, defi: 20, checklist: 20 }[nd.type] || 10; }

@@ -2,7 +2,7 @@
 import { $, esc, h, md, modal, toast, mascot, confetti, sfx, todayKey, weekKey, arWrap } from './util.js';
 import { store } from './store.js';
 import { tts } from './tts.js';
-import { nodeState, buildSession, runSession, nodeXp, unitNodes } from './engine.js';
+import { nodeState, buildSession, runSession, nodeXp, unitNodes, DAYS } from './engine.js';
 import { openParent, requirePin } from './parent.js';
 
 const AVATARS = ['🦊', '🐱', '🐼', '🦁', '🐸', '🐧', '🦄', '🐯', '🐨', '🐙', '🦉', '🐬'];
@@ -77,22 +77,29 @@ export function render() {
 }
 
 /* ---------------- onglet parcours ---------------- */
+const TODAY_KEY = { 2: 'mardi', 4: 'jeudi', 6: 'samedi' };
 const SEANCES = {
-  2: ['📖', 'Mardi : séance de 20 min avec papa', 'Lecture du vocabulaire à voix haute et premier dialogue.'],
-  4: ['✍️', 'Jeudi : séance de 20 min avec papa', 'Écriture dans le cahier : copier, compléter, associer.'],
-  6: ['🗣️', 'Samedi : la grande séance de 45 min', 'Oral, cahier fermé : jeux, dialogue en tunisien et défi de la semaine.'],
+  mardi: ['📖', 'Mardi : séance de 20 min avec papa', n => `Lecture du vocabulaire à voix haute. Dans l'appli : les étapes ⭐ Nouveaux mots de l'unité ${n}.`],
+  jeudi: ['✍️', 'Jeudi : séance de 20 min avec papa', n => `Écriture dans le cahier (exercices 2 et 3), puis l'étape 💬 Dialogue de l'unité ${n}.`],
+  samedi: ['🗣️', 'Samedi : la grande séance de 45 min', n => `Oral, cahier fermé : 🇹🇳 Parle tunisien, 🏆 Révision, dialogue joué avec papa, puis on lance le 🎁 défi de l'unité ${n}.`],
 };
 
 function pathTab(main) {
   const c = store.content, p = store.me;
-  const { list, state, current } = nodeState(c, p);
+  const { list, state, current, pending } = nodeState(c, p);
   const goal = store.settings.dailyGoal, tx = store.todayXp(p);
   const cur = list.find(n => n.id === current);
   main.append(h(`<div class="card today"><div class="ring" style="--p:${Math.min(100, tx / goal * 100)}"><b>${tx}/${goal}</b></div>
     <div style="flex:1"><b>${tx >= goal ? 'Objectif du jour atteint ! 🎉' : 'Objectif du jour'}</b><div class="muted">${tx >= goal ? 'Tu peux continuer pour la ligue.' : `Encore ${goal - tx} XP aujourd'hui`}</div></div>
     ${cur ? '<button class="btn small" data-cont>Continuer</button>' : ''}</div>`));
-  const s = SEANCES[new Date().getDay()];
-  if (s) main.append(h(`<div class="seance"><span class="e">${s[0]}</span><div><b>${s[1]}</b><div class="muted">${s[2]}</div></div></div>`));
+  const today = TODAY_KEY[new Date().getDay()];
+  const s = SEANCES[today];
+  if (s && cur) main.append(h(`<div class="seance"><span class="e">${s[0]}</span><div><b>${s[1]}</b><div class="muted">${s[2](cur.unit.num)}</div></div></div>`));
+  pending.forEach(nd => {
+    const b = h(`<button class="seance defi-pending"><span class="e">🎁</span><div><b>Défi en cours · unité ${nd.unit.num}</b><div class="muted">À jouer toute la semaine. Papa le valide quand il est réussi.</div></div></button>`);
+    b.onclick = () => openNode(nd, 'pending');
+    main.append(b);
+  });
   main.querySelector('[data-cont]')?.addEventListener('click', () => openNode(cur));
 
   let offset = 0;
@@ -102,11 +109,17 @@ function pathTab(main) {
       <div><div class="n">Unité ${u.num}</div><h2>${esc(u.title)}</h2></div>
       <button class="guide" data-guide="${u.id}">📘 <b>Guide</b></button></div>`));
     const path = h('<div class="path"></div>');
+    let day = null;
     nodes.forEach(nd => {
       const st = state[nd.id];
+      if (nd.day && nd.day !== day) {
+        day = nd.day;
+        const d = DAYS[day];
+        path.append(h(`<div class="day-chip ${day === today ? 'today' : ''}" style="--c:${u.color}">${d[0]} <b>${d[1]}</b> · ${d[2]} · ${d[3]}</div>`));
+      }
       const x = Math.round(Math.sin(offset++ * 0.9) * 90);
-      const wrap = h(`<div style="transform:translateX(${x}px)"><button class="node ${st === 'locked' ? 'locked' : ''} ${st === 'done' ? 'done' : ''} ${st === 'current' ? 'current' : ''}"
-        style="--c:${u.color}" aria-label="${esc(nd.label)}">${st === 'locked' ? '🔒' : nd.icon}${st === 'current' ? `<span class="start">${nd === list[0] && !Object.keys(p.done).length ? 'Commencer' : 'Ici'}</span>` : ''}</button></div>`);
+      const wrap = h(`<div style="transform:translateX(${x}px)"><button class="node ${st === 'locked' ? 'locked' : ''} ${st === 'done' ? 'done' : ''} ${st === 'current' ? 'current' : ''} ${st === 'pending' ? 'pending' : ''}"
+        style="--c:${u.color}" aria-label="${esc(nd.label)}">${st === 'locked' ? '🔒' : nd.icon}${st === 'current' ? `<span class="start">${nd === list[0] && !Object.keys(p.done).length ? 'Commencer' : 'Ici'}</span>` : ''}${st === 'pending' ? '<span class="tag">En cours</span>' : ''}</button></div>`);
       wrap.firstElementChild.onclick = () => openNode(nd, st);
       path.append(wrap);
     });
@@ -128,7 +141,7 @@ function openNode(nd, st) {
   }
   if (nd.type === 'defi') return openDefi(nd, st);
   if (nd.type === 'checklist') return openChecklist(nd, st);
-  const m = modal(`<div class="muted" style="font-weight:800">UNITÉ ${u.num} · ${esc(u.title)}</div>
+  const m = modal(`<div class="muted" style="font-weight:800">UNITÉ ${u.num} · ${esc(u.title)}${nd.day ? ` · ${DAYS[nd.day][1].toUpperCase()}` : ''}</div>
     <h2>${nd.icon} ${esc(nd.label)}</h2>
     <p class="muted">${nd.type === 'learn' ? `${nd.words.length} nouveaux mots : ${nd.words.map(w => esc(w.fr)).join(', ')}` : nd.type === 'tn' ? 'Passe de l\'arabe standard au tunisien de la maison.' : nd.type === 'dialogue' ? 'Construis les phrases du dialogue.' : 'Un mélange de tout ce que tu as appris.'}</p>
     <button class="btn block" data-start style="margin-top:12px">${st === 'done' ? 'Refaire' : 'Commencer'} +${xp} XP</button>`);
@@ -212,7 +225,7 @@ function openDefi(nd, st) {
   const u = nd.unit;
   const m = modal(`<div style="text-align:center;font-size:64px">🎁</div><h2>Défi de la semaine · Unité ${u.num}</h2>
     <div class="md">${md(u.defi)}</div>
-    <p class="muted">Le défi se lance le samedi et dure toute la semaine. Quand il est réussi, papa le valide.</p>
+    <p class="muted">Le défi se lance le samedi et dure toute la semaine. Il ne bloque pas le parcours : mardi, on commence l'unité suivante. Quand le défi est réussi, papa le valide (en général le samedi d'après).</p>
     <div class="row"><button class="btn ghost" data-x>Plus tard</button>${st === 'done' ? '<button class="btn" disabled>Validé ✓</button>' : `<button class="btn gold" data-ok>Papa valide (+${nodeXp(nd)} XP)</button>`}</div>`);
   m.querySelector('[data-x]').onclick = () => m.close();
   m.querySelector('[data-ok]')?.addEventListener('click', async () => {

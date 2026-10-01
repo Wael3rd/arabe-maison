@@ -17,6 +17,18 @@ Application web installable (PWA) pour apprendre l'arabe standard et le tunisien
 
 Voix arabe : Paramètres Android › Synthèse vocale › moteur Google › Installer les données vocales › Arabe. L'écran Réglages de l'espace parent permet de choisir la voix et de la tester.
 
+## La semaine type
+
+Une unité = une semaine. Le parcours indique pour chaque étape le jour où la faire :
+
+| Jour | Séance | Étapes de l'appli |
+| --- | --- | --- |
+| Mardi | 20 min, lecture à voix haute | ⭐ Nouveaux mots |
+| Jeudi | 20 min, écrit dans le cahier | 💬 Dialogue |
+| Samedi | 45 min, oral en tunisien | 🇹🇳 Parle tunisien, 🏆 Révision, 🎁 Défi |
+
+Le défi se lance le samedi et dure toute la semaine : il ne bloque pas le parcours (on commence l'unité suivante le mardi) et papa le valide quand il est réussi.
+
 ## Modifier le contenu
 
 1. Espace parent (🔒, code choisi à la première ouverture) › **GitHub** : renseigne compte, dépôt, branche et un jeton *fine-grained* limité à ce dépôt avec la permission **Contents : Read and write**.
