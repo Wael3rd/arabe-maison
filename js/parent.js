@@ -1,8 +1,9 @@
 // Espace parent : carnet papa, éditeur de contenu, profils, réglages, publication GitHub.
 import { esc, h, md, modal, toast, ask, sha256, arWrap, sfx } from './util.js';
-import { store } from './store.js';
+import { store, normalizeProfile } from './store.js';
 import { tts } from './tts.js';
 import { openSync } from './sync.js';
+import { cloud, syncNow, pairingLink, DEFAULT_PROG_REPO } from './cloud.js';
 
 /* ---------------- code parent ---------------- */
 export function requirePin() {
@@ -240,8 +241,8 @@ function kids(main) {
       <div style="display:flex;flex-wrap:wrap;gap:8px"><button class="btn small ghost" data-heal>❤️ Remplir les cœurs</button>
       <button class="btn small ghost" data-exp>⬇️ Sauvegarder la progression</button>
       <button class="btn small red" data-reset>Remettre à zéro</button><button class="btn small red" data-del>Supprimer</button></div></div>`);
-    c.querySelector('[data-name]').onchange = e => { p.name = e.target.value.trim() || p.name; store.persist(); };
-    c.querySelector('[data-heal]').onclick = () => { p.hearts = 5; store.persist(); toast('Cœurs remplis'); draw(); };
+    c.querySelector('[data-name]').onchange = e => { p.name = e.target.value.trim() || p.name; p.imt = Date.now(); store.persist(); };
+    c.querySelector('[data-heal]').onclick = () => { p.hearts = 5; p.hmt = Date.now(); store.persist(); toast('Cœurs remplis'); draw(); };
     c.querySelector('[data-exp]').onclick = () => download(`progression-${p.name}.json`, JSON.stringify(p));
     c.querySelector('[data-reset]').onclick = async () => { if (await ask('Remettre à zéro ?', `Toute la progression de ${p.name} sera effacée.`, { ok: 'Effacer', danger: true })) { store.resetProfile(p); draw(); } };
     c.querySelector('[data-del]').onclick = async () => { if (await ask('Supprimer ce profil ?', p.name, { ok: 'Supprimer', danger: true })) { store.removeProfile(p.id); draw(); } };
@@ -249,7 +250,7 @@ function kids(main) {
   });
   main.append(h(`<label class="btn small ghost">⬆️ Restaurer une progression<input type="file" accept=".json" hidden data-imp></label>`));
   main.querySelector('[data-imp]').onchange = async e => {
-    try { const p = JSON.parse(await e.target.files[0].text()); if (!p.id || !p.words) throw 0;
+    try { const p = normalizeProfile(JSON.parse(await e.target.files[0].text())); if (!p.id || !p.words) throw 0;
       store.profiles = store.profiles.filter(x => x.id !== p.id).concat(p); store.persist(); toast('Progression restaurée'); draw(); }
     catch { toast('Fichier invalide'); }
   };
@@ -338,20 +339,54 @@ function github(main) {
     <div style="display:flex;flex-wrap:wrap;gap:10px"><button class="btn small" data-save>Enregistrer</button><button class="btn small blue" data-test>Tester la connexion</button>
       <button class="btn small ghost" data-pull>⬇️ Récupérer la version publiée</button><button class="btn small ghost" data-pub ${store.usingDraft ? '' : 'disabled'}>☁️ Publier le brouillon</button></div>
   </div>
+  <div class="card" style="margin-top:14px">
+    <h3>🔄 Synchroniser la progression entre appareils</h3>
+    <p class="muted">La progression des deux enfants est partagée entre la tablette et le téléphone : chacun peut passer d’un appareil à l’autre et voir où en est l’autre. Elle est rangée dans un <b>dépôt GitHub privé</b>, séparé du cours.</p>
+    <div class="field"><label>Dépôt privé de progression</label><input class="input" data-g="progRepo" value="${esc(g.progRepo ?? DEFAULT_PROG_REPO)}" placeholder="${DEFAULT_PROG_REPO}"></div>
+    <p class="muted" data-cstate style="font-size:14px"></p>
+    <div style="display:flex;flex-wrap:wrap;gap:10px"><button class="btn small blue" data-csync>🔄 Synchroniser maintenant</button><button class="btn small" data-pair>📲 Jumeler un autre appareil</button></div>
+  </div>
+  <div class="card md" style="margin-top:14px">${md(`**Mettre en place la synchro (une seule fois)**
+
+1. Sur github.com : **+** › **New repository**, nom \`${DEFAULT_PROG_REPO}\`, coche **Private**, **Create repository**.
+2. Ouvre ton jeton (Settings › Developer settings › Fine-grained tokens › le jeton de la tablette) › **Repository access** : ajoute ce nouveau dépôt à côté du dépôt du cours › **Update**. Le jeton ne change pas.
+3. Ici : **Enregistrer**, puis **Synchroniser maintenant**.
+4. **Jumeler un autre appareil** : envoie-toi le lien (WhatsApp, mail…) et ouvre-le dans Chrome sur le téléphone. Il configure GitHub et le code parent d’un coup. Les profils du même prénom sont fusionnés.`)}</div>
   <div class="card md" style="margin-top:14px">${md(`**Créer le jeton (une seule fois)**
 
 1. Sur github.com : photo de profil › **Settings** › **Developer settings** › **Personal access tokens** › **Fine-grained tokens** › **Generate new token**.
 2. Nom : « arabe tablette », expiration : 1 an. **Repository access** : *Only select repositories* › ton dépôt du cours.
 3. **Permissions** › Repository permissions › **Contents : Read and write**. Rien d’autre.
 4. Copie le jeton ici. Il reste uniquement sur cet appareil ; le code parent protège cet écran.`)}</div></div>`));
-  const read = () => { const v = { ...store.github }; main.querySelectorAll('[data-g]').forEach(i => v[i.dataset.g] = i.value.trim()); v.path = v.path || 'content.json'; v.branch = v.branch || 'main'; store.github = v; };
-  main.querySelector('[data-save]').onclick = () => { read(); toast('Enregistré'); };
+  const read = () => { const v = { ...store.github }; main.querySelectorAll('[data-g]').forEach(i => v[i.dataset.g] = i.value.trim()); v.path = v.path || 'content.json'; v.branch = v.branch || 'main'; store.github = v; cloud.onStatus?.(); };
+  main.querySelector('[data-save]').onclick = () => { read(); toast('Enregistré'); syncNow(); };
   main.querySelector('[data-test]').onclick = async () => {
     read();
     try { const r = await gh('GET', ''); toast(`Connexion OK : ${r.full_name}${r.permissions?.push ? ' (écriture autorisée)' : ' (lecture seule !)'}`, 4000); }
     catch (e) { toast('Échec : ' + e.message, 5000); }
   };
   main.querySelector('[data-pub]').onclick = () => { read(); publish(); };
+  const cstate = () => {
+    const el = main.querySelector('[data-cstate]'); if (!el) return;
+    el.textContent = cloud.status === 'off' ? 'Synchro désactivée : renseigne le compte, le jeton et le dépôt de progression.'
+      : cloud.status === 'syncing' ? 'Synchronisation en cours…'
+      : cloud.status === 'error' ? '⚠️ ' + cloud.error
+      : cloud.last ? `✅ Dernière synchro : ${new Date(cloud.last).toLocaleString('fr-FR', { weekday: 'long', hour: '2-digit', minute: '2-digit' })}` : 'Pas encore synchronisé.';
+  };
+  cstate(); cloud.onParent = cstate;
+  main.querySelector('[data-csync]').onclick = async () => { read(); await syncNow(); cstate(); toast(cloud.status === 'ok' ? 'Progression synchronisée' : 'Synchro impossible : ' + cloud.error, 4000); };
+  main.querySelector('[data-pair]').onclick = () => {
+    read();
+    if (!store.github.token) return toast('Renseigne d’abord le jeton');
+    const link = pairingLink();
+    const m = modal(`<h2>📲 Jumeler un appareil</h2>
+      <p class="muted">Ouvre ce lien dans Chrome sur l’autre appareil (téléphone ou tablette). Il contient la clé GitHub : ne l’envoie qu’à toi-même.</p>
+      <textarea class="input" readonly rows="3" style="font-size:12px;word-break:break-all">${esc(link)}</textarea>
+      <div class="row"><button class="btn ghost" data-x>Fermer</button>${navigator.share ? '<button class="btn blue" data-share>Envoyer…</button>' : ''}<button class="btn" data-copy>Copier</button></div>`);
+    m.querySelector('[data-x]').onclick = () => m.close();
+    m.querySelector('[data-copy]').onclick = async () => { try { await navigator.clipboard.writeText(link); toast('Lien copié'); } catch { m.querySelector('textarea').select(); toast('Sélectionne et copie le lien'); } };
+    m.querySelector('[data-share]')?.addEventListener('click', () => navigator.share({ title: 'Arabe à la maison', text: 'Jumelage de l’appli', url: link }).catch(() => {}));
+  };
   main.querySelector('[data-pull]').onclick = async () => {
     read();
     try {

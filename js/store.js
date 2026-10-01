@@ -1,13 +1,25 @@
 // État persistant : contenu (publié ou brouillon), profils, progression, réglages.
 import { todayKey, weekKey } from './util.js';
 
-const K = { profiles: 'ar.profiles', settings: 'ar.settings', draft: 'ar.draft', current: 'ar.current', gh: 'ar.github', pin: 'ar.pin' };
+const K = { profiles: 'ar.profiles', settings: 'ar.settings', draft: 'ar.draft', current: 'ar.current', gh: 'ar.github', pin: 'ar.pin', gone: 'ar.gone' };
 
 function load(key, fallback) {
   try { const v = localStorage.getItem(key); return v ? JSON.parse(v) : fallback; } catch { return fallback; }
 }
 function save(key, val) {
   try { localStorage.setItem(key, JSON.stringify(val)); } catch (e) { console.warn('stockage impossible', e); }
+}
+
+/** Compteurs d'XP propres à un appareil : la synchro additionne ceux de tous les appareils. */
+export const zeroCounter = () => ({ xp: 0, days: {}, weeks: {} });
+
+/** Complète un profil ancien ou importé avec les champs nécessaires à la synchro. */
+export function normalizeProfile(p) {
+  p.days = p.days || {}; p.weeks = p.weeks || {}; p.done = p.done || {}; p.words = p.words || {};
+  p.frozen = p.frozen || {}; p.checks = p.checks || {}; p.xp = p.xp || 0;
+  if (!p.mine) p.mine = { xp: p.xp, days: { ...p.days }, weeks: { ...p.weeks } };
+  p.dev = p.dev || {}; p.rev = p.rev || 0; p.imt = p.imt || 0; p.hmt = p.hmt || 0;
+  return p;
 }
 
 export const DEFAULT_SETTINGS = {
@@ -17,7 +29,9 @@ export const DEFAULT_SETTINGS = {
 
 export const store = {
   content: null, published: null, usingDraft: false,
-  profiles: load(K.profiles, []),
+  profiles: load(K.profiles, []).map(normalizeProfile),
+  gone: load(K.gone, {}),
+  onChange: null, // appelé à chaque sauvegarde de la progression (synchro)
   settings: { ...DEFAULT_SETTINGS, karaScale: (() => { try { return +(localStorage.getItem('ar.karaScale') || 1); } catch { return 1; } })(), ...load(K.settings, {}) },
   currentId: load(K.current, null),
 
@@ -49,13 +63,21 @@ export const store = {
   get me() { return this.profiles.find(p => p.id === this.currentId) || null; },
   select(id) { this.currentId = id; save(K.current, id); },
   addProfile(name, avatar, color) {
-    const p = { id: 'p' + Date.now().toString(36), name, avatar, color, xp: 0, days: {}, weeks: {},
-      hearts: 5, heartsTs: Date.now(), done: {}, words: {}, freezes: 2, freezeWeek: weekKey(), frozen: {}, checks: {}, created: todayKey() };
+    const p = normalizeProfile({ id: 'p' + Date.now().toString(36), name, avatar, color, xp: 0, days: {}, weeks: {},
+      hearts: 5, heartsTs: Date.now(), done: {}, words: {}, freezes: 2, freezeWeek: weekKey(), frozen: {}, checks: {}, created: todayKey(),
+      mine: zeroCounter(), imt: Date.now() });
     this.profiles.push(p); this.persist(); return p;
   },
-  removeProfile(id) { this.profiles = this.profiles.filter(p => p.id !== id); if (this.currentId === id) this.currentId = null; this.persist(); },
-  resetProfile(p) { Object.assign(p, { xp: 0, days: {}, weeks: {}, hearts: 5, done: {}, words: {}, frozen: {}, checks: {} }); this.persist(); },
-  persist() { save(K.profiles, this.profiles); },
+  removeProfile(id) {
+    this.profiles = this.profiles.filter(p => p.id !== id); if (this.currentId === id) this.currentId = null;
+    this.gone[id] = Date.now(); save(K.gone, this.gone); this.persist();
+  },
+  resetProfile(p) {
+    Object.assign(p, { xp: 0, days: {}, weeks: {}, hearts: 5, done: {}, words: {}, frozen: {}, checks: {}, mine: zeroCounter(), dev: {}, rev: (p.rev || 0) + 1 });
+    this.persist();
+  },
+  saveGone() { save(K.gone, this.gone); },
+  persist(silent = false) { save(K.profiles, this.profiles); if (!silent) this.onChange?.(); },
 
   /* ---------- cœurs ---------- */
   hearts(p = this.me) {
@@ -70,15 +92,16 @@ export const store = {
   loseHeart(p = this.me) {
     if (!this.settings.hearts) return;
     if (p.hearts >= 5) p.heartsTs = Date.now();
-    p.hearts = Math.max(0, p.hearts - 1); this.persist();
+    p.hearts = Math.max(0, p.hearts - 1); p.hmt = Date.now(); this.persist();
   },
-  gainHeart(p = this.me) { p.hearts = Math.min(5, p.hearts + 1); this.persist(); },
+  gainHeart(p = this.me) { p.hearts = Math.min(5, p.hearts + 1); p.hmt = Date.now(); this.persist(); },
   nextHeartIn(p = this.me) { return Math.max(0, 30 * 60e3 - (Date.now() - p.heartsTs)); },
 
   /* ---------- XP, série ---------- */
   addXp(n, p = this.me) {
     const d = todayKey(), w = weekKey();
     p.xp += n; p.days[d] = (p.days[d] || 0) + n; p.weeks[w] = (p.weeks[w] || 0) + n;
+    const m = p.mine; m.xp += n; m.days[d] = (m.days[d] || 0) + n; m.weeks[w] = (m.weeks[w] || 0) + n;
     this.persist();
   },
   todayXp(p = this.me) { return p.days[todayKey()] || 0; },

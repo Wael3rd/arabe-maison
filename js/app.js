@@ -4,6 +4,7 @@ import { store } from './store.js';
 import { tts } from './tts.js';
 import { nodeState, buildSession, runSession, nodeXp, unitNodes, DAYS } from './engine.js';
 import { openParent, requirePin } from './parent.js';
+import { cloud, initCloud, syncNow } from './cloud.js';
 
 const AVATARS = ['🦊', '🐱', '🐼', '🦁', '🐸', '🐧', '🦄', '🐯', '🐨', '🐙', '🦉', '🐬'];
 const PCOLORS = ['#FFE3C2', '#D7F5E6', '#DDF0FB', '#F1ECFF', '#FFE3E4', '#FFF4C2'];
@@ -16,7 +17,36 @@ async function boot() {
   catch (e) { app().innerHTML = `<div class="profiles">${mascot('sad', 'mascot-l')}<h1>Impossible de charger les leçons</h1><p class="muted">Connecte la tablette à Internet une première fois.</p></div>`; return; }
   sfx.enabled = store.settings.sounds;
   if ('serviceWorker' in navigator && location.protocol !== 'file:') navigator.serviceWorker.register('sw.js').catch(() => {});
+  const paired = initCloud();
+  cloud.onRemote = refreshIfIdle;
+  cloud.onStatus = () => document.querySelectorAll('[data-resync]').forEach(b => b.outerHTML = syncLine());
+  document.addEventListener('click', e => e.target.closest('[data-resync]') && syncNow());
   store.me ? render() : profilesScreen();
+  if (paired) toast('Appareil jumelé : la progression se synchronise ☁️', 4000);
+}
+
+/** Redessine l'écran courant après une synchro, sauf pendant une leçon, l'espace parent ou une fenêtre ouverte. */
+function refreshIfIdle() {
+  if (document.querySelector('.lesson') || document.getElementById('modal-root')?.children.length) return;
+  const y = window.scrollY;
+  store.me ? render() : profilesScreen();
+  window.scrollTo(0, y);
+}
+
+function syncLine() {
+  if (cloud.status === 'off') return '';
+  const t = cloud.last ? new Date(cloud.last).toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' }) : '';
+  const txt = cloud.status === 'syncing' ? '☁️ Synchronisation…'
+    : cloud.status === 'error' ? '⚠️ Synchro impossible pour l’instant'
+    : t ? `☁️ Synchronisé à ${t}` : '☁️ Synchro activée';
+  return `<button class="link sync-line" data-resync>${txt}</button>`;
+}
+
+/** Où en est un joueur dans le parcours (pour voir la progression de l'autre). */
+function whereIs(p) {
+  const { list, current } = nodeState(store.content, p);
+  const nd = list.find(n => n.id === current);
+  return nd ? `Unité ${nd.unit.num} · ${nd.icon} ${nd.label}` : 'Parcours terminé 🏆';
 }
 
 /* ---------------- profils ---------------- */
@@ -26,9 +56,10 @@ function profilesScreen() {
   const el = h(`<div class="profiles">${mascot('happy', 'mascot-l')}
     <h1>${ps.length ? 'Qui joue ?' : 'Bienvenue !'}</h1>
     ${ps.length ? '' : '<p class="muted" style="max-width:420px">Crée un profil pour chaque enfant : chacun aura sa progression, ses XP et sa série.</p>'}
-    <div class="plist">${ps.map(p => `<button class="pcard" data-id="${p.id}"><span class="avatar" style="background:${p.color}">${p.avatar}</span>${esc(p.name)}<small>🔥 ${store.streak(p)} · ⚡ ${p.xp} XP</small></button>`).join('')}
+    <div class="plist">${ps.map(p => `<button class="pcard" data-id="${p.id}"><span class="avatar" style="background:${p.color}">${p.avatar}</span>${esc(p.name)}<small>🔥 ${store.streak(p)} · ⚡ ${p.xp} XP</small><small class="where">${esc(whereIs(p))}</small></button>`).join('')}
       ${ps.length < 4 ? `<button class="pcard" data-new><span class="avatar" style="background:#F2EEE7">➕</span>Nouveau<small>profil</small></button>` : ''}</div>
-    ${ps.length ? '<button class="link" data-parent>🔒 Espace parent</button>' : ''}</div>`);
+    ${ps.length ? '<button class="link" data-parent>🔒 Espace parent</button>' : ''}
+    ${syncLine()}</div>`);
   app().append(el);
   el.querySelectorAll('[data-id]').forEach(b => b.onclick = () => { store.select(b.dataset.id); tab = 'path'; render(); });
   el.querySelector('[data-new]')?.addEventListener('click', newProfile);
@@ -282,8 +313,9 @@ function leagueTab(main) {
   const l = h('<div class="league"></div>');
   ps.forEach((p, i) => l.append(h(`<div class="card lrow" style="${p.id === store.currentId ? 'border-color:var(--blue);background:var(--blue-l)' : ''}">
     <span class="rk">${medals[i] || i + 1}</span><span class="avatar" style="background:${p.color}">${p.avatar}</span>
-    <span class="nm">${esc(p.name)}</span><span class="x">⚡ ${store.weekXp(p)} XP</span></div>`)));
+    <span class="nm">${esc(p.name)}<small>${esc(whereIs(p))} · ⚡ ${p.xp} XP au total</small></span><span class="x">⚡ ${store.weekXp(p)} XP</span></div>`)));
   main.append(l);
+  if (cloud.status !== 'off') main.append(h(`<p style="text-align:center;margin-top:14px">${syncLine()}</p>`));
   const last = new Date(); last.setDate(last.getDate() - 7);
   const lw = weekKey(last);
   const prev = [...store.profiles].sort((a, b) => store.weekXp(b, lw) - store.weekXp(a, lw));

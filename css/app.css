@@ -335,3 +335,8 @@ textarea.input{min-height:90px;resize:vertical;line-height:1.5}
 .tap-pad .ar span.hit{color:#E86A00}
 .tap-pad.flash{animation:tapflash .18s}
 @keyframes tapflash{from{background:#FFD9A8}}
+
+/* synchro entre appareils */
+.pcard .where{font-size:12px;font-weight:700;opacity:.75;margin-top:2px}
+.lrow .nm small{display:block;font-size:13px;font-weight:700;color:var(--muted,#7A7368);margin-top:2px}
+.sync-line{font-size:14px;opacity:.8;margin-top:6px}
