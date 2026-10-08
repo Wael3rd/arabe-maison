@@ -1,5 +1,5 @@
 // Espace parent : carnet papa, éditeur de contenu, profils, réglages, publication GitHub.
-import { esc, h, md, modal, toast, ask, sha256, arWrap, sfx } from './util.js';
+import { esc, h, md, modal, toast, ask, sha256, arWrap, sfx, cahierHtml } from './util.js';
 import { store, normalizeProfile } from './store.js';
 import { tts } from './tts.js';
 import { openSync } from './sync.js';
@@ -76,6 +76,8 @@ function carnet(main) {
       ${u.dialogue.length ? `<h3>Dialogue</h3><ul>${u.dialogue.map(l => `<li><span class="ar">${esc(l.who)} : ${esc(l.ar)}</span><br><span class="muted">${esc(l.fr)} · 🇹🇳 ${esc(l.tnLat)}</span></li>`).join('')}</ul>` : ''}
       ${u.dialogueNote ? md(u.dialogueNote) : ''}
       ${u.exercises?.length ? `<h3>Exercices (cahier et oral)</h3>${md(u.exercises.map((e, i) => `${i + 1}. ${e}`).join('\n'))}` : ''}
+      ${u.cahier?.jeudi?.length ? `<h3>✍️ Cahier : page du jeudi (15 min)</h3>${cahierHtml(u, 'jeudi')}` : ''}
+      ${u.cahier?.samedi?.length ? `<h3>📒 Cahier : page du samedi (5 min en fin de séance)</h3>${cahierHtml(u, 'samedi')}` : ''}
       ${u.parcours ? `<h3>Parcours de la semaine</h3>${md(u.parcours)}` : ''}
       ${u.defi ? `<h3>Défi de la semaine</h3>${md(u.defi)}` : ''}
       ${u.apres ? `<h3>Et après ?</h3>${md(u.apres)}` : ''}
@@ -158,6 +160,8 @@ function unitEditor(main) {
       ${inp('Remarque sous le dialogue', 'dialogueNote', u.dialogueNote, { area: true })}
       ${inp('Exercices cahier / oral (un par ligne)', 'exercises', (u.exercises || []).join('\n'), { area: true })}
       ${inp('Défi de la semaine', 'defi', u.defi, { area: true })}
+      ${inp('Cahier, page du jeudi (une consigne par ligne ; après « => », les lignes arabes à recopier, séparées par « / »)', 'cahierJeudi', (u.cahier?.jeudi || []).join('\n'), { area: true })}
+      ${inp('Cahier, page du samedi (même format que le jeudi)', 'cahierSamedi', (u.cahier?.samedi || []).join('\n'), { area: true })}
     </div>
     <div style="display:flex;gap:10px;margin-top:18px"><button class="btn red small" data-del>Supprimer l’unité</button><span style="flex:1"></span><button class="btn" data-save>Enregistrer</button></div>
   </div>`);
@@ -195,7 +199,14 @@ function unitEditor(main) {
   };
   drawVocab(); drawDia();
   bindFields(el.querySelector('[data-main]'), u);
-  bindFields(el.querySelector('[data-extra]'), u, { exercises: v => v.split('\n').map(s => s.trim()).filter(Boolean) });
+  const lines = v => v.split('\n').map(s => s.trim()).filter(Boolean);
+  const extra = el.querySelector('[data-extra]');
+  bindFields(extra, u, { exercises: lines });
+  [['cahierJeudi', 'jeudi'], ['cahierSamedi', 'samedi']].forEach(([k, d]) => {
+    const f = extra.querySelector(`[data-k="${k}"]`);
+    const set = () => { u.cahier = { ...(u.cahier || {}), [d]: lines(f.value) }; delete u[k]; };
+    f.addEventListener('input', set); f.addEventListener('change', set);
+  });
   el.querySelector('[data-addw]').onclick = () => { u.vocab.push({ id: `${u.id}w${Date.now().toString(36)}`, fr: '', ar: '', lat: '', tn: '', tnLat: '' }); drawVocab(); vbox.lastElementChild.scrollIntoView({ behavior: 'smooth' }); };
   el.querySelector('[data-addl]').onclick = () => { u.dialogue.push({ who: u.dialogue.length % 2 ? 'ب' : 'أ', ar: '', fr: '', tnLat: '' }); drawDia(); };
   el.querySelectorAll('[data-h]').forEach(b => b.addEventListener('pointerdown', e => {

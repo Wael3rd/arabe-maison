@@ -97,6 +97,18 @@ export function md(src = '') {
   }).join('');
 }
 
+/* ---------- cahier : pages du jeudi et du samedi ---------- */
+export function cahierHtml(u, day) {
+  const items = u.cahier?.[day];
+  if (!items?.length) return '';
+  // « consigne => ligne 1 / ligne 2 » : ce qui suit => est le modèle, une ligne du cahier par segment
+  const item = t => {
+    const [txt, model] = String(t).split(/\s*=>\s*/);
+    const lines = model ? model.split(/\s+\/\s+/).filter(Boolean) : [];
+    return `<li>${md(txt).replace(/^<p>|<\/p>$/g, '')}${lines.length ? `<div class="modele" dir="rtl">${lines.map(l => `<div>${esc(l)}</div>`).join('')}</div>` : ''}</li>`;
+  };
+  return `<div class="cahier md"><ol>${items.map(item).join('')}</ol></div>`;
+}
 /* ---------- toasts & modales ---------- */
 export function toast(msg, ms = 2400) {
   const el = h(`<div class="toast">${esc(msg)}</div>`);

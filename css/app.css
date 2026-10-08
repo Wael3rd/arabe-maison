@@ -340,3 +340,15 @@ textarea.input{min-height:90px;resize:vertical;line-height:1.5}
 .pcard .where{font-size:12px;font-weight:700;opacity:.75;margin-top:2px}
 .lrow .nm small{display:block;font-size:13px;font-weight:700;color:var(--muted,#7A7368);margin-top:2px}
 .sync-line{font-size:14px;opacity:.8;margin-top:6px}
+
+/* cahier : pages du jeudi et du samedi */
+button.day-chip{font:inherit;font-size:14px;font-weight:700;cursor:pointer}
+.cahier-link{margin-top:6px;font-weight:900;color:var(--blue,#1C8ED6)}
+.cahier{background:#FFFDF6;border:2px solid #EADFC4;border-radius:var(--radius);padding:10px 14px 10px 8px;margin-top:10px;
+  background-image:repeating-linear-gradient(transparent 0 31px,#E9EEF7 31px 32px)}
+.cahier ol{margin:0;padding-left:26px}
+.cahier li{margin:6px 0;line-height:1.6}
+.cahier li::marker{font-weight:900;color:var(--blue,#1C8ED6)}
+.cahier .ar{font-size:1.25em}
+.cahier .modele{margin:6px 0 4px;padding:6px 12px;background:#fff;border-right:4px solid var(--blue);border-radius:8px;
+  font-family:var(--ar);font-size:22px;line-height:1.7;text-align:right}

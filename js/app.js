@@ -1,5 +1,5 @@
 // Écrans de l'application enfant : profils, parcours, entraînement, ligue, profil.
-import { $, esc, h, md, modal, toast, mascot, confetti, sfx, todayKey, weekKey, arWrap } from './util.js';
+import { $, esc, h, md, modal, toast, mascot, confetti, sfx, todayKey, weekKey, arWrap, cahierHtml } from './util.js';
 import { store } from './store.js';
 import { tts } from './tts.js';
 import { nodeState, buildSession, runSession, nodeXp, unitNodes, DAYS } from './engine.js';
@@ -111,9 +111,20 @@ export function render() {
 const TODAY_KEY = { 2: 'mardi', 4: 'jeudi', 6: 'samedi' };
 const SEANCES = {
   mardi: ['📖', 'Mardi : séance de 20 min avec papa', n => `Lecture du vocabulaire à voix haute. Dans l'appli : les étapes ⭐ Nouveaux mots de l'unité ${n}.`],
-  jeudi: ['✍️', 'Jeudi : séance de 20 min avec papa', n => `Écriture dans le cahier (exercices 2 et 3), puis l'étape 💬 Dialogue de l'unité ${n}.`],
-  samedi: ['🗣️', 'Samedi : la grande séance de 45 min', n => `Oral, cahier fermé : 🇹🇳 Parle tunisien, 🏆 Révision, dialogue joué avec papa, puis on lance le 🎁 défi de l'unité ${n}.`],
+  jeudi: ['✍️', 'Jeudi : séance de 20 min avec papa', n => `15 min de cahier (la page du jeudi de l'unité ${n}), puis l'étape 💬 Dialogue.`],
+  samedi: ['🗣️', 'Samedi : la grande séance de 45 min', n => `Oral, cahier fermé : 🇹🇳 Parle tunisien, 🏆 Révision, dialogue joué avec papa, 🎁 défi de l'unité ${n}. Puis 5 min de cahier : la page du samedi.`],
 };
+
+/* ---------------- le cahier (ce qu'on écrit le jeudi et le samedi) ---------------- */
+const CAHIER_T = { jeudi: ['✍️', 'Page du jeudi', 'Séance d\'écriture : environ 15 min. Tout s\'écrit en arabe standard.'],
+  samedi: ['📒', 'Page du samedi', 'À faire à la fin de la séance, en 5 min : pendant la séance, le cahier reste fermé.'] };
+function openCahier(u, day) {
+  const t = CAHIER_T[day];
+  const m = modal(`<div class="muted" style="font-weight:800">UNITÉ ${u.num} · ${esc(u.title)}</div>
+    <h2>${t[0]} Dans le cahier : ${t[1].toLowerCase()}</h2><p class="muted">${t[2]}</p>${cahierHtml(u, day)}
+    <div class="row"><button class="btn ghost" data-x>Fermer</button></div>`);
+  m.querySelector('[data-x]').onclick = () => m.close();
+}
 
 function pathTab(main) {
   const c = store.content, p = store.me;
@@ -125,7 +136,12 @@ function pathTab(main) {
     ${cur ? '<button class="btn small" data-cont>Continuer</button>' : ''}</div>`));
   const today = TODAY_KEY[new Date().getDay()];
   const s = SEANCES[today];
-  if (s && cur) main.append(h(`<div class="seance"><span class="e">${s[0]}</span><div><b>${s[1]}</b><div class="muted">${s[2](cur.unit.num)}</div></div></div>`));
+  if (s && cur) {
+    const hasC = cur.unit.cahier?.[today]?.length;
+    const b = h(`<${hasC ? 'button' : 'div'} class="seance"><span class="e">${s[0]}</span><div><b>${s[1]}</b><div class="muted">${s[2](cur.unit.num)}</div>${hasC ? '<div class="cahier-link">📒 Voir ce qu\'on écrit dans le cahier</div>' : ''}</div></${hasC ? 'button' : 'div'}>`);
+    if (hasC) b.onclick = () => openCahier(cur.unit, today);
+    main.append(b);
+  }
   pending.forEach(nd => {
     const b = h(`<button class="seance defi-pending"><span class="e">🎁</span><div><b>Défi en cours · unité ${nd.unit.num}</b><div class="muted">À jouer toute la semaine. Papa le valide quand il est réussi.</div></div></button>`);
     b.onclick = () => openNode(nd, 'pending');
@@ -146,7 +162,10 @@ function pathTab(main) {
       if (nd.day && nd.day !== day) {
         day = nd.day;
         const d = DAYS[day];
-        path.append(h(`<div class="day-chip ${day === today ? 'today' : ''}" style="--c:${u.color}">${d[0]} <b>${d[1]}</b> · ${d[2]} · ${d[3]}</div>`));
+        const hasC = u.cahier?.[day]?.length;
+        const chip = h(`<${hasC ? 'button' : 'div'} class="day-chip ${day === today ? 'today' : ''}" style="--c:${u.color}">${d[0]} <b>${d[1]}</b> · ${d[2]} · ${d[3]}${hasC ? ' · <b>📒 cahier</b>' : ''}</${hasC ? 'button' : 'div'}>`);
+        if (hasC) { const dd = day; chip.onclick = () => openCahier(u, dd); }
+        path.append(chip);
       }
       const x = Math.round(Math.sin(offset++ * 0.9) * 90);
       const wrap = h(`<div style="transform:translateX(${x}px)"><button class="node ${st === 'locked' ? 'locked' : ''} ${st === 'done' ? 'done' : ''} ${st === 'current' ? 'current' : ''} ${st === 'pending' ? 'pending' : ''}"
@@ -175,8 +194,10 @@ function openNode(nd, st) {
   const m = modal(`<div class="muted" style="font-weight:800">UNITÉ ${u.num} · ${esc(u.title)}${nd.day ? ` · ${DAYS[nd.day][1].toUpperCase()}` : ''}</div>
     <h2>${nd.icon} ${esc(nd.label)}</h2>
     <p class="muted">${nd.type === 'learn' ? `${nd.words.length} nouveaux mots : ${nd.words.map(w => esc(w.fr)).join(', ')}` : nd.type === 'tn' ? 'Passe de l\'arabe standard au tunisien de la maison.' : nd.type === 'dialogue' ? 'Construis les phrases du dialogue.' : 'Un mélange de tout ce que tu as appris.'}</p>
+    ${u.cahier?.[nd.day]?.length ? `<button class="btn ghost small block" data-cahier style="margin-top:12px">📒 ${CAHIER_T[nd.day][1]} du cahier</button>` : ''}
     <button class="btn block" data-start style="margin-top:12px">${st === 'done' ? 'Refaire' : 'Commencer'} +${xp} XP</button>`);
   m.querySelector('[data-start]').onclick = () => { m.close(); startNode(nd, st); };
+  m.querySelector('[data-cahier]')?.addEventListener('click', () => openCahier(u, nd.day));
 }
 
 function noHearts() {
@@ -246,6 +267,7 @@ export function openGuide(u) {
     ${u.vocab?.length ? `<h3 class="section-t">Vocabulaire</h3><div class="vocab-list">${u.vocab.map(vrow).join('')}</div>` : ''}
     ${u.dialogue?.length ? `<h3 class="section-t">Dialogue</h3><div class="vocab-list">${u.dialogue.map(l => `<div class="vrow"><b>${esc(l.who)}</b><div class="fr">${esc(l.fr)}<small>🇹🇳 ${esc(l.tnLat)}</small></div><span class="ar" style="font-size:22px;max-width:55%">${esc(l.ar)}</span><button class="speak" data-say="${esc(l.ar)}">🔊</button></div>`).join('')}</div>` : ''}
     ${u.dialogueNote ? `<div class="md muted">${md(u.dialogueNote)}</div>` : ''}
+    ${['jeudi', 'samedi'].map(d => u.cahier?.[d]?.length ? `<h3 class="section-t">${CAHIER_T[d][0]} Cahier : ${CAHIER_T[d][1].toLowerCase()}</h3><p class="muted">${CAHIER_T[d][2]}</p>${cahierHtml(u, d)}` : '').join('')}
     <div class="row"><button class="btn ghost" data-x>Fermer</button></div>`);
   m.querySelectorAll('[data-say]').forEach(b => b.onclick = () => tts.speak(b.dataset.say));
   m.querySelector('[data-x]').onclick = () => m.close();
