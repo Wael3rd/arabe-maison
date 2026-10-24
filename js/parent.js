@@ -14,8 +14,10 @@ export function requirePin() {
       <p class="muted">${creating ? 'Il protège l’espace parent et la validation des défis. 4 chiffres ou plus.' : 'Réservé à papa !'}</p>
       <input class="input" type="password" inputmode="numeric" autocomplete="off" data-pin style="font-size:28px;text-align:center;letter-spacing:.4em">
       ${creating ? '<input class="input" type="password" inputmode="numeric" autocomplete="off" data-pin2 placeholder="Confirme le code" style="margin-top:10px;text-align:center">' : ''}
-      <div class="row"><button class="btn ghost" data-x>Annuler</button><button class="btn" data-ok>Valider</button></div>`,
+      <div class="row"><button class="btn ghost" data-x>Annuler</button><button class="btn" data-ok>Valider</button></div>
+      ${creating ? '' : '<p style="text-align:center;margin-top:10px"><button class="btn small ghost" data-forgot>Code oublié ?</button></p>'}`,
       { onClose: () => res(false) });
+    m.querySelector('[data-forgot]')?.addEventListener('click', async () => { m.remove(); res(await resetPinWithToken()); });
     const inp = m.querySelector('[data-pin]');
     setTimeout(() => inp.focus(), 100);
     m.querySelector('[data-x]').onclick = () => m.close();
@@ -30,6 +32,33 @@ export function requirePin() {
     };
     m.querySelector('[data-ok]').onclick = ok;
     inp.addEventListener('keydown', e => e.key === 'Enter' && !creating && ok());
+  });
+}
+
+/** Code oublié : le jeton GitHub (avec droit d'écriture sur le dépôt du cours) prouve qu'on est le parent. */
+function resetPinWithToken() {
+  return new Promise(res => {
+    const m = modal(`<h2>🔑 Code oublié</h2>
+      <p class="muted">Colle ton jeton GitHub (github_pat_…). S’il donne accès en écriture au dépôt du cours, tu pourras choisir un nouveau code. Le jeton est aussi enregistré sur cet appareil.</p>
+      <input class="input" type="password" autocomplete="off" data-tok placeholder="github_pat_…">
+      <div class="row"><button class="btn ghost" data-x>Annuler</button><button class="btn" data-ok>Vérifier</button></div>`,
+      { onClose: () => res(false) });
+    m.querySelector('[data-x]').onclick = () => m.close();
+    m.querySelector('[data-ok]').onclick = async () => {
+      const tok = m.querySelector('[data-tok]').value.trim();
+      if (!tok) return toast('Colle le jeton');
+      const g = store.github, owner = g.owner || 'Wael3rd', repo = g.repo || 'arabe-maison';
+      try {
+        const r = await fetch(`https://api.github.com/repos/${owner}/${repo}`, { cache: 'no-store', headers: { Accept: 'application/vnd.github+json', Authorization: `Bearer ${tok}`, 'X-GitHub-Api-Version': '2022-11-28' } });
+        const j = await r.json().catch(() => ({}));
+        if (!r.ok || !j.permissions?.push) return toast(r.status === 401 ? 'Jeton refusé par GitHub (expiré ou incorrect)' : 'Ce jeton n’a pas le droit d’écrire dans le dépôt du cours', 4000);
+      } catch { return toast('Pas de connexion à GitHub'); }
+      if (tok !== g.token) { store.github = { ...g, owner, repo, token: tok }; tokenChanged(); noteTokenChange(g.token, tok); syncNow(); }
+      m.remove();
+      const old = store.pinHash; store.pinHash = null;
+      if (await requirePin()) { toast('Nouveau code enregistré'); res(true); }
+      else { store.pinHash = old; res(false); }
+    };
   });
 }
 
