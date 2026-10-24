@@ -19,6 +19,7 @@ async function boot() {
   if ('serviceWorker' in navigator && location.protocol !== 'file:') navigator.serviceWorker.register('sw.js').catch(() => {});
   const paired = initCloud();
   cloud.onRemote = refreshIfIdle;
+  cloud.onToken = () => toast('Nouveau jeton GitHub récupéré automatiquement ☁️', 4000);
   cloud.onStatus = () => document.querySelectorAll('[data-resync]').forEach(b => b.outerHTML = syncLine());
   document.addEventListener('click', e => e.target.closest('[data-resync]') && syncNow());
   store.me ? render() : profilesScreen();

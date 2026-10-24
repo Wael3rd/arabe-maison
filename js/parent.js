@@ -3,7 +3,8 @@ import { esc, h, md, modal, toast, ask, sha256, arWrap, sfx, cahierHtml } from '
 import { store, normalizeProfile } from './store.js';
 import { tts } from './tts.js';
 import { openSync } from './sync.js';
-import { cloud, syncNow, pairingLink, DEFAULT_PROG_REPO } from './cloud.js';
+import { cloud, syncNow, pairingLink, tokenChanged, DEFAULT_PROG_REPO } from './cloud.js';
+import { noteTokenChange } from './relay.js';
 
 /* ---------------- code parent ---------------- */
 export function requirePin() {
@@ -368,8 +369,10 @@ function github(main) {
 1. Sur github.com : photo de profil › **Settings** › **Developer settings** › **Personal access tokens** › **Fine-grained tokens** › **Generate new token**.
 2. Nom : « arabe tablette », expiration : 1 an. **Repository access** : *Only select repositories* › ton dépôt du cours et le dépôt privé de progression.
 3. **Permissions** › Repository permissions › **Contents : Read and write**. Rien d’autre.
-4. Copie le jeton ici. Il reste uniquement sur cet appareil ; le code parent protège cet écran.`)}</div></div>`));
-  const read = () => { const v = { ...store.github }; main.querySelectorAll('[data-g]').forEach(i => v[i.dataset.g] = i.value.trim()); v.path = v.path || 'content.json'; v.branch = v.branch || 'main'; store.github = v; cloud.onStatus?.(); };
+4. Copie le jeton ici. Le code parent protège cet écran.
+
+**Quand le jeton expire** : régénère-le sur GitHub, puis colle-le ici sur **un seul appareil** et **Enregistrer**. L’appli dépose une copie chiffrée (lisible seulement avec l’ancien jeton) dans le dépôt du cours ; les autres appareils la récupèrent d’eux-mêmes à leur prochaine synchro.`)}</div></div>`));
+  const read = () => { const before = store.github.token; const v = { ...store.github }; main.querySelectorAll('[data-g]').forEach(i => v[i.dataset.g] = i.value.trim()); v.path = v.path || 'content.json'; v.branch = v.branch || 'main'; store.github = v; if (v.token && v.token !== before) { tokenChanged(); noteTokenChange(before, v.token); } cloud.onStatus?.(); };
   main.querySelector('[data-save]').onclick = () => { read(); toast('Enregistré'); syncNow(); };
   main.querySelector('[data-test]').onclick = async () => {
     read();

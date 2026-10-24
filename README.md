@@ -62,3 +62,7 @@ La synchro se fait toute seule (à l'ouverture, après chaque leçon, toutes les
 | `sw.js` | Fonctionnement hors ligne |
 
 Sans synchro, la progression reste sur l'appareil (sauvegarde possible dans Espace parent › Enfants).
+
+## Renouvellement du jeton GitHub
+
+Quand le jeton expire : le régénérer sur GitHub, puis le coller dans l'espace parent (onglet GitHub › Enregistrer) sur **un seul appareil**. L'appli dépose le nouveau jeton dans `relais-jeton.json`, chiffré en AES-GCM avec une clé dérivée de l'ancien jeton (`js/relay.js`). Les autres appareils, quand leur jeton est refusé (401), lisent ce fichier, déchiffrent l'entrée qui correspond à leur jeton et l'adoptent ; un appareil qui a manqué plusieurs renouvellements remonte la chaîne.

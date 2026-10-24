@@ -1,8 +1,8 @@
 // Service worker : l'appli marche hors ligne ; content.json est toujours rafraîchi quand le réseau est là.
-const VERSION = 'arabe-v7';
+const VERSION = 'arabe-v8';
 const SHELL = [
   './', 'index.html', 'manifest.webmanifest', 'css/app.css',
-  'js/app.js', 'js/engine.js', 'js/parent.js', 'js/store.js', 'js/tts.js', 'js/util.js', 'js/sync.js', 'js/cloud.js',
+  'js/app.js', 'js/engine.js', 'js/parent.js', 'js/store.js', 'js/tts.js', 'js/util.js', 'js/sync.js', 'js/cloud.js', 'js/relay.js',
   'content.json', 'icons/icon-192.png', 'icons/icon-512.png',
   'fonts/noto-naskh-arabic-arabic-400-normal.woff2', 'fonts/noto-naskh-arabic-arabic-700-normal.woff2',
   'fonts/nunito-latin-400-normal.woff2', 'fonts/nunito-latin-700-normal.woff2',
@@ -18,6 +18,8 @@ self.addEventListener('activate', e => {
 self.addEventListener('fetch', e => {
   const url = new URL(e.request.url);
   if (e.request.method !== 'GET' || url.origin !== location.origin) return;
+  // Relais du jeton : toujours le réseau, jamais le cache.
+  if (url.pathname.endsWith('relais-jeton.json')) return;
   // Contenu et code : réseau d'abord (mises à jour immédiates), cache si hors ligne.
   if (/content\.json$|\.js$|\.css$|\.html$|\/$/.test(url.pathname)) {
     e.respondWith(fetch(e.request).then(r => {

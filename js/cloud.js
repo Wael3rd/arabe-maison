@@ -6,6 +6,7 @@
 //  - mots : la révision la plus récente l'emporte ; cœurs : le dernier changement l'emporte ;
 //  - remise à zéro (rev) et suppression (gone) : propagées à tous les appareils.
 import { store, normalizeProfile, zeroCounter } from './store.js';
+import { adoptFromRelay, flushRelay } from './relay.js';
 
 const FILE = 'progression.json';
 const KEY = { device: 'ar.device', synced: 'ar.syncedOnce', last: 'ar.lastSync' };
@@ -168,7 +169,9 @@ const same = (a, b) => {
 };
 
 /* ---------------- boucle de synchro ---------------- */
-let running = null, again = false, pushTimer = null, pollTimer = null;
+let running = null, again = false, pushTimer = null, pollTimer = null, relayTried = false;
+// Après un changement manuel du jeton, on autorise de nouveau une recherche dans le relais.
+export function tokenChanged() { relayTried = false; }
 
 function setStatus(st, err = '') { cloud.status = st; cloud.error = err; cloud.onStatus?.(); cloud.onParent?.(); }
 
@@ -193,9 +196,16 @@ export function syncNow() {
       }
       cloud.last = Date.now(); ls.set(KEY.last, cloud.last);
       setStatus('ok');
+      relayTried = false;
+      flushRelay();
     } catch (e) {
-      setStatus('error', e.status === 404 ? `Dépôt ${cloud.repo()} introuvable, ou le jeton n'y a pas accès.`
-        : e.status === 401 ? 'Jeton refusé (expiré ou incorrect).'
+      // Jeton refusé : un autre appareil a peut-être déjà déposé le nouveau jeton dans le relais.
+      if (e.status === 401 && !relayTried) {
+        relayTried = true;
+        if (await adoptFromRelay().catch(() => false)) { again = true; cloud.onToken?.(); }
+      }
+      if (!again) setStatus('error', e.status === 404 ? `Dépôt ${cloud.repo()} introuvable, ou le jeton n'y a pas accès.`
+        : e.status === 401 ? 'Jeton refusé (expiré ou incorrect). Colle le nouveau jeton dans l’espace parent sur un seul appareil : les autres le récupéreront tout seuls.'
         : e.status === 403 ? 'Le jeton n’a pas le droit d’écrire dans le dépôt de progression.' : e.message);
     }
     running = null;
