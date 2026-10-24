@@ -4,7 +4,7 @@ import { store } from './store.js';
 import { tts } from './tts.js';
 import { nodeState, buildSession, runSession, nodeXp, unitNodes, DAYS } from './engine.js';
 import { openParent, requirePin } from './parent.js';
-import { cloud, initCloud, syncNow } from './cloud.js';
+import { cloud, initCloud, syncNow, signIn } from './cloud.js';
 
 const AVATARS = ['🦊', '🐱', '🐼', '🦁', '🐸', '🐧', '🦄', '🐯', '🐨', '🐙', '🦉', '🐬'];
 const PCOLORS = ['#FFE3C2', '#D7F5E6', '#DDF0FB', '#F1ECFF', '#FFE3E4', '#FFF4C2'];
@@ -17,13 +17,19 @@ async function boot() {
   catch (e) { app().innerHTML = `<div class="profiles">${mascot('sad', 'mascot-l')}<h1>Impossible de charger les leçons</h1><p class="muted">Connecte la tablette à Internet une première fois.</p></div>`; return; }
   sfx.enabled = store.settings.sounds;
   if ('serviceWorker' in navigator && location.protocol !== 'file:') navigator.serviceWorker.register('sw.js').catch(() => {});
-  const paired = initCloud();
+  initCloud();
   cloud.onRemote = refreshIfIdle;
-  cloud.onToken = () => toast('Nouveau jeton GitHub récupéré automatiquement ☁️', 4000);
-  cloud.onStatus = () => document.querySelectorAll('[data-resync]').forEach(b => b.outerHTML = syncLine());
-  document.addEventListener('click', e => e.target.closest('[data-resync]') && syncNow());
+  let wasUser = null;
+  cloud.onStatus = () => {
+    const now = cloud.user?.uid || '';
+    if (cloud.ready && now !== wasUser) { wasUser = now; refreshIfIdle(); return; }   // connexion ou déconnexion
+    document.querySelectorAll('[data-resync]').forEach(b => b.outerHTML = syncLine());
+  };
+  document.addEventListener('click', e => {
+    if (e.target.closest('[data-resync]')) syncNow();
+    if (e.target.closest('[data-login]')) login();
+  });
   store.me ? render() : profilesScreen();
-  if (paired) toast('Appareil jumelé : la progression se synchronise ☁️', 4000);
 }
 
 /** Redessine l'écran courant après une synchro, sauf pendant une leçon, l'espace parent ou une fenêtre ouverte. */
@@ -34,12 +40,27 @@ function refreshIfIdle() {
   window.scrollTo(0, y);
 }
 
+/** Connexion Google (protégée par le code parent s'il existe). */
+async function login() {
+  if (store.pinHash && !(await requirePin())) return;
+  try { if (await signIn()) toast('Connecté : la progression se synchronise ☁️', 4000); }
+  catch (e) { toast('Connexion impossible : ' + (e.code || e.message), 5000); }
+}
+
+/** Encart de connexion sur l'écran « Qui joue ? ». */
+function accountBox() {
+  if (!cloud.configured || !cloud.ready || cloud.user) return '';
+  return `<div class="card account-box"><b>☁️ Retrouve la progression sur tous tes appareils</b>
+    <p class="muted">Connecte‑toi avec ton compte Google : la progression des enfants est sauvegardée et partagée entre la tablette, le téléphone…</p>
+    <button class="btn blue" data-login>Se connecter avec Google</button></div>`;
+}
+
 function syncLine() {
-  if (cloud.status === 'off') return '';
+  if (!cloud.user) return '';
   const t = cloud.last ? new Date(cloud.last).toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' }) : '';
   const txt = cloud.status === 'syncing' ? '☁️ Synchronisation…'
     : cloud.status === 'error' ? '⚠️ Synchro impossible pour l’instant'
-    : t ? `☁️ Synchronisé à ${t}` : '☁️ Synchro activée';
+    : t ? `☁️ ${esc(cloud.user.email)} · synchronisé à ${t}` : `☁️ ${esc(cloud.user.email)}`;
   return `<button class="link sync-line" data-resync>${txt}</button>`;
 }
 
@@ -60,7 +81,7 @@ function profilesScreen() {
     <div class="plist">${ps.map(p => `<button class="pcard" data-id="${p.id}"><span class="avatar" style="background:${p.color}">${p.avatar}</span>${esc(p.name)}<small>🔥 ${store.streak(p)} · ⚡ ${p.xp} XP</small><small class="where">${esc(whereIs(p))}</small></button>`).join('')}
       ${ps.length < 4 ? `<button class="pcard" data-new><span class="avatar" style="background:#F2EEE7">➕</span>Nouveau<small>profil</small></button>` : ''}</div>
     ${ps.length ? '<button class="link" data-parent>🔒 Espace parent</button>' : ''}
-    ${syncLine()}</div>`);
+    ${syncLine()}${accountBox()}</div>`);
   app().append(el);
   el.querySelectorAll('[data-id]').forEach(b => b.onclick = () => { store.select(b.dataset.id); tab = 'path'; render(); });
   el.querySelector('[data-new]')?.addEventListener('click', newProfile);
@@ -338,7 +359,7 @@ function leagueTab(main) {
     <span class="rk">${medals[i] || i + 1}</span><span class="avatar" style="background:${p.color}">${p.avatar}</span>
     <span class="nm">${esc(p.name)}<small>${esc(whereIs(p))} · ⚡ ${p.xp} XP au total</small></span><span class="x">⚡ ${store.weekXp(p)} XP</span></div>`)));
   main.append(l);
-  if (cloud.status !== 'off') main.append(h(`<p style="text-align:center;margin-top:14px">${syncLine()}</p>`));
+  if (cloud.user) main.append(h(`<p style="text-align:center;margin-top:14px">${syncLine()}</p>`));
   const last = new Date(); last.setDate(last.getDate() - 7);
   const lw = weekKey(last);
   const prev = [...store.profiles].sort((a, b) => store.weekXp(b, lw) - store.weekXp(a, lw));

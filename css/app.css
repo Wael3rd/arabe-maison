@@ -352,3 +352,5 @@ button.day-chip{font:inherit;font-size:14px;font-weight:700;cursor:pointer}
 .cahier .ar{font-size:1.25em}
 .cahier .modele{margin:6px 0 4px;padding:6px 12px;background:#fff;border-right:4px solid var(--blue);border-radius:8px;
   font-family:var(--ar);font-size:22px;line-height:1.7;text-align:right}
+.account-box{max-width:440px;margin:18px auto 0;text-align:center;display:grid;gap:8px;justify-items:center}
+.account-box p{margin:0}

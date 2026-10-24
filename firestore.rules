@@ -1,0 +1,15 @@
+rules_version = '2';
+// Chaque famille (compte Google) ne lit et n'écrit que ses propres données.
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function owner(uid) { return request.auth != null && request.auth.uid == uid; }
+    match /familles/{uid} {
+      allow read, write: if owner(uid);
+      match /profils/{profil} {
+        allow read, delete: if owner(uid);
+        allow create, update: if owner(uid) && request.resource.data.p is string
+                              && request.resource.data.p.size() < 900000;
+      }
+    }
+  }
+}

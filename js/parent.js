@@ -3,7 +3,7 @@ import { esc, h, md, modal, toast, ask, sha256, arWrap, sfx, cahierHtml } from '
 import { store, normalizeProfile } from './store.js';
 import { tts } from './tts.js';
 import { openSync } from './sync.js';
-import { cloud, syncNow, pairingLink, tokenChanged, DEFAULT_PROG_REPO } from './cloud.js';
+import { cloud, syncNow, signIn, signOutAccount, reauth } from './cloud.js';
 import { noteTokenChange } from './relay.js';
 
 /* ---------------- code parent ---------------- */
@@ -17,7 +17,14 @@ export function requirePin() {
       <div class="row"><button class="btn ghost" data-x>Annuler</button><button class="btn" data-ok>Valider</button></div>
       ${creating ? '' : '<p style="text-align:center;margin-top:10px"><button class="btn small ghost" data-forgot>Code oublié ?</button></p>'}`,
       { onClose: () => res(false) });
-    m.querySelector('[data-forgot]')?.addEventListener('click', async () => { m.remove(); res(await resetPinWithToken()); });
+    m.querySelector('[data-forgot]')?.addEventListener('click', async () => {
+      m.remove();
+      if (cloud.user) {
+        if (await reauth()) { const old = store.pinHash; store.adoptPin(null, 0); if (await requirePin()) { toast('Nouveau code enregistré'); return res(true); } store.adoptPin(old, Date.now()); return res(false); }
+        toast('Vérification Google annulée'); return res(false);
+      }
+      res(await resetPinWithToken());
+    });
     const inp = m.querySelector('[data-pin]');
     setTimeout(() => inp.focus(), 100);
     m.querySelector('[data-x]').onclick = () => m.close();
@@ -39,7 +46,7 @@ export function requirePin() {
 function resetPinWithToken() {
   return new Promise(res => {
     const m = modal(`<h2>🔑 Code oublié</h2>
-      <p class="muted">Colle ton jeton GitHub (github_pat_…). S’il donne accès en écriture au dépôt du cours, tu pourras choisir un nouveau code. Le jeton est aussi enregistré sur cet appareil.</p>
+      <p class="muted">Sans compte Google connecté sur cet appareil, seul le jeton GitHub du cours permet de prouver que tu es le parent. Colle‑le (github_pat_…) : s’il donne accès en écriture au dépôt du cours, tu pourras choisir un nouveau code.</p>
       <input class="input" type="password" autocomplete="off" data-tok placeholder="github_pat_…">
       <div class="row"><button class="btn ghost" data-x>Annuler</button><button class="btn" data-ok>Vérifier</button></div>`,
       { onClose: () => res(false) });
@@ -53,7 +60,7 @@ function resetPinWithToken() {
         const j = await r.json().catch(() => ({}));
         if (!r.ok || !j.permissions?.push) return toast(r.status === 401 ? 'Jeton refusé par GitHub (expiré ou incorrect)' : 'Ce jeton n’a pas le droit d’écrire dans le dépôt du cours', 4000);
       } catch { return toast('Pas de connexion à GitHub'); }
-      if (tok !== g.token) { store.github = { ...g, owner, repo, token: tok }; tokenChanged(); noteTokenChange(g.token, tok); syncNow(); }
+      if (tok !== g.token) { store.github = { ...g, owner, repo, token: tok }; noteTokenChange(g.token, tok); }
       m.remove();
       const old = store.pinHash; store.pinHash = null;
       if (await requirePin()) { toast('Nouveau code enregistré'); res(true); }
@@ -76,14 +83,14 @@ export async function openParent(exitCb) {
 function close() { root.remove(); root = null; editing = null; tts.stop(); onExit && onExit(); }
 
 function draw() {
-  const tabs = [['carnet', '📒 Carnet papa'], ['content', '✏️ Contenu'], ['kids', '👧 Enfants'], ['settings', '⚙️ Réglages'], ['github', '☁️ GitHub']];
+  const tabs = [['carnet', '📒 Carnet papa'], ['content', '✏️ Contenu'], ['kids', '👧 Enfants'], ['settings', '⚙️ Réglages'], ['account', '👤 Compte'], ['github', '☁️ Leçons (GitHub)']];
   root.innerHTML = '';
   root.append(h(`<header class="topbar"><div class="who">🔒 Espace parent ${store.usingDraft ? '<span class="badge">brouillon</span>' : ''}</div><button class="btn small" data-close>Fermer</button></header>`));
   const main = h(`<main class="main" style="padding-bottom:40px"><div class="ptabs">${tabs.map(([k, l]) => `<button data-t="${k}" class="${ptab === k ? 'on' : ''}">${l}</button>`).join('')}</div></main>`);
   root.append(main);
   root.querySelector('[data-close]').onclick = close;
   main.querySelectorAll('[data-t]').forEach(b => b.onclick = () => { ptab = b.dataset.t; editing = null; draw(); });
-  ({ carnet, content: contentTab, kids, settings, github })[ptab](main);
+  ({ carnet, content: contentTab, kids, settings, account, github })[ptab](main);
 }
 
 /* ---------------- carnet papa (lecture du cours complet) ---------------- */
@@ -335,6 +342,40 @@ function settings(main) {
   main.querySelector('[data-s="sounds"]').addEventListener('change', () => sfx.enabled = s.sounds);
 }
 
+/* ---------------- compte famille ---------------- */
+function account(main) {
+  if (!cloud.configured) {
+    main.append(h(`<div class="card"><h3>👤 Compte famille</h3><p class="muted">La connexion avec Google n’est pas encore activée sur cette version de l’appli. En attendant, la progression reste sur cet appareil.</p></div>`));
+    return;
+  }
+  const u = cloud.user;
+  const box = h(`<div class="card"><h3>👤 Compte famille</h3>${u
+    ? `<p>Connecté avec <b>${esc(u.email)}</b>${u.name ? ` (${esc(u.name)})` : ''}.</p>
+       <p class="muted">La progression de tous les profils suit ce compte : connecte‑toi avec la même adresse sur un autre appareil et tout y est. Les changements passent d’un appareil à l’autre en quelques secondes.</p>
+       <p class="muted" data-cstate style="font-size:14px"></p>
+       <div style="display:flex;flex-wrap:wrap;gap:10px"><button class="btn small blue" data-csync>🔄 Synchroniser maintenant</button><button class="btn small ghost" data-out>Se déconnecter</button></div>`
+    : `<p class="muted">Connecte‑toi avec ton compte Google : la progression des enfants est sauvegardée et retrouvée sur tous tes appareils (tablette, téléphone…). Chaque famille utilise sa propre adresse.</p>
+       <p class="muted">À la première connexion, les profils de cet appareil sont ajoutés au compte sans rien perdre ; un profil du même prénom qu’un profil déjà dans le compte est fusionné avec lui.</p>
+       <button class="btn blue" data-in>Se connecter avec Google</button>`}</div>`);
+  main.append(box);
+  const cstate = () => {
+    const el = box.querySelector('[data-cstate]'); if (!el) return;
+    el.textContent = cloud.status === 'syncing' ? 'Synchronisation en cours…'
+      : cloud.status === 'error' ? '⚠️ ' + cloud.error
+      : cloud.last ? `✅ Dernière synchro : ${new Date(cloud.last).toLocaleString('fr-FR', { weekday: 'long', hour: '2-digit', minute: '2-digit' })}` : 'Pas encore synchronisé.';
+  };
+  cstate(); cloud.onParent = () => { if (ptab === 'account' && root) { const was = !!u; if (was !== !!cloud.user) draw(); else cstate(); } };
+  box.querySelector('[data-in]')?.addEventListener('click', async () => {
+    try { if (await signIn()) toast('Connecté : la progression se synchronise ☁️', 4000); }
+    catch (e) { toast('Connexion impossible : ' + (e.code || e.message), 5000); }
+  });
+  box.querySelector('[data-csync]')?.addEventListener('click', async () => { await syncNow(); cstate(); toast(cloud.status === 'ok' ? 'Progression synchronisée' : 'Synchro impossible : ' + (cloud.error || 'pas de connexion'), 4000); });
+  box.querySelector('[data-out]')?.addEventListener('click', async () => {
+    if (!(await ask('Se déconnecter ?', 'La progression reste dans le compte. Les profils disparaissent de cet appareil jusqu’à la prochaine connexion.', { ok: 'Se déconnecter', danger: true }))) return;
+    await signOutAccount(); toast('Déconnecté'); draw();
+  });
+}
+
 /* ---------------- GitHub ---------------- */
 function b64encode(str) {
   const bytes = new TextEncoder().encode(str); let bin = '';
@@ -373,63 +414,29 @@ function github(main) {
   const g = store.github;
   main.append(h(`<div><div class="card">
     <h3>☁️ Sauvegarde du contenu sur GitHub</h3>
-    <p class="muted">Le fichier <code>content.json</code> de ton dépôt GitHub Pages est la version officielle du cours. L’éditeur le met à jour directement via l’API GitHub.</p>
+    <p class="muted">Réservé à l’auteur du cours. Le fichier <code>content.json</code> de ton dépôt GitHub Pages est la version officielle du cours, la même pour toutes les familles. L’éditeur le met à jour via l’API GitHub. La progression des enfants, elle, passe par l’onglet 👤 Compte.</p>
     <div class="grid2">${[['owner', 'Compte GitHub', 'Wael3rd'], ['repo', 'Dépôt', 'arabe-maison'], ['branch', 'Branche', 'main'], ['path', 'Chemin du fichier', 'content.json']]
       .map(([k, l, ph]) => `<div class="field"><label>${l}</label><input class="input" data-g="${k}" value="${esc(g[k] || '')}" placeholder="${ph}"></div>`).join('')}</div>
     <div class="field"><label>Jeton d’accès (fine-grained token)</label><input class="input" type="password" data-g="token" value="${esc(g.token || '')}" placeholder="github_pat_…"></div>
     <div style="display:flex;flex-wrap:wrap;gap:10px"><button class="btn small" data-save>Enregistrer</button><button class="btn small blue" data-test>Tester la connexion</button>
       <button class="btn small ghost" data-pull>⬇️ Récupérer la version publiée</button><button class="btn small ghost" data-pub ${store.usingDraft ? '' : 'disabled'}>☁️ Publier le brouillon</button></div>
   </div>
-  <div class="card" style="margin-top:14px">
-    <h3>🔄 Synchroniser la progression entre appareils</h3>
-    <p class="muted">La progression des deux enfants est partagée entre la tablette et le téléphone : chacun peut passer d’un appareil à l’autre et voir où en est l’autre. Elle est rangée dans un <b>dépôt GitHub privé</b>, séparé du cours.</p>
-    <div class="field"><label>Dépôt privé de progression</label><input class="input" data-g="progRepo" value="${esc(g.progRepo ?? DEFAULT_PROG_REPO)}" placeholder="${DEFAULT_PROG_REPO}"></div>
-    <p class="muted" data-cstate style="font-size:14px"></p>
-    <div style="display:flex;flex-wrap:wrap;gap:10px"><button class="btn small blue" data-csync>🔄 Synchroniser maintenant</button><button class="btn small" data-pair>📲 Jumeler un autre appareil</button></div>
-  </div>
-  <div class="card md" style="margin-top:14px">${md(`**Mettre en place la synchro (une seule fois)**
-
-1. Sur github.com : **+** › **New repository**, nom « ${DEFAULT_PROG_REPO} », coche **Private**, **Create repository**.
-2. Ouvre ton jeton (Settings › Developer settings › Fine-grained tokens › le jeton de la tablette) › **Repository access** : ajoute ce nouveau dépôt à côté du dépôt du cours › **Update**. Le jeton ne change pas.
-3. Ici : **Enregistrer**, puis **Synchroniser maintenant**.
-4. **Jumeler un autre appareil** : envoie-toi le lien (WhatsApp, mail…) et ouvre-le dans Chrome sur le téléphone. Il configure GitHub et le code parent d’un coup. Les profils du même prénom sont fusionnés.`)}</div>
   <div class="card md" style="margin-top:14px">${md(`**Créer le jeton (une seule fois)**
 
 1. Sur github.com : photo de profil › **Settings** › **Developer settings** › **Personal access tokens** › **Fine-grained tokens** › **Generate new token**.
-2. Nom : « arabe tablette », expiration : 1 an. **Repository access** : *Only select repositories* › ton dépôt du cours et le dépôt privé de progression.
+2. Nom : « arabe tablette », expiration : 1 an. **Repository access** : *Only select repositories* › ton dépôt du cours.
 3. **Permissions** › Repository permissions › **Contents : Read and write**. Rien d’autre.
 4. Copie le jeton ici. Le code parent protège cet écran.
 
 **Quand le jeton expire** : régénère-le sur GitHub, puis colle-le ici sur **un seul appareil** et **Enregistrer**. L’appli dépose une copie chiffrée (lisible seulement avec l’ancien jeton) dans le dépôt du cours ; les autres appareils la récupèrent d’eux-mêmes à leur prochaine synchro.`)}</div></div>`));
-  const read = () => { const before = store.github.token; const v = { ...store.github }; main.querySelectorAll('[data-g]').forEach(i => v[i.dataset.g] = i.value.trim()); v.path = v.path || 'content.json'; v.branch = v.branch || 'main'; store.github = v; if (v.token && v.token !== before) { tokenChanged(); noteTokenChange(before, v.token); } cloud.onStatus?.(); };
-  main.querySelector('[data-save]').onclick = () => { read(); toast('Enregistré'); syncNow(); };
+  const read = () => { const before = store.github.token; const v = { ...store.github }; main.querySelectorAll('[data-g]').forEach(i => v[i.dataset.g] = i.value.trim()); v.path = v.path || 'content.json'; v.branch = v.branch || 'main'; store.github = v; if (v.token && v.token !== before) noteTokenChange(before, v.token); };
+  main.querySelector('[data-save]').onclick = () => { read(); toast('Enregistré'); };
   main.querySelector('[data-test]').onclick = async () => {
     read();
     try { const r = await gh('GET', ''); toast(`Connexion OK : ${r.full_name}${r.permissions?.push ? ' (écriture autorisée)' : ' (lecture seule !)'}`, 4000); }
     catch (e) { toast('Échec : ' + e.message, 5000); }
   };
   main.querySelector('[data-pub]').onclick = () => { read(); publish(); };
-  const cstate = () => {
-    const el = main.querySelector('[data-cstate]'); if (!el) return;
-    el.textContent = cloud.status === 'off' ? 'Synchro désactivée : renseigne le compte, le jeton et le dépôt de progression.'
-      : cloud.status === 'syncing' ? 'Synchronisation en cours…'
-      : cloud.status === 'error' ? '⚠️ ' + cloud.error
-      : cloud.last ? `✅ Dernière synchro : ${new Date(cloud.last).toLocaleString('fr-FR', { weekday: 'long', hour: '2-digit', minute: '2-digit' })}` : 'Pas encore synchronisé.';
-  };
-  cstate(); cloud.onParent = cstate;
-  main.querySelector('[data-csync]').onclick = async () => { read(); await syncNow(); cstate(); toast(cloud.status === 'ok' ? 'Progression synchronisée' : cloud.status === 'off' ? 'Synchro désactivée : remplis le compte GitHub, le dépôt et le jeton, puis Enregistrer' : 'Synchro impossible : ' + (cloud.error || 'pas de connexion'), 5000); };
-  main.querySelector('[data-pair]').onclick = () => {
-    read();
-    if (!store.github.token) return toast('Renseigne d’abord le jeton');
-    const link = pairingLink();
-    const m = modal(`<h2>📲 Jumeler un appareil</h2>
-      <p class="muted">Ouvre ce lien dans Chrome sur l’autre appareil (téléphone ou tablette). Il contient la clé GitHub : ne l’envoie qu’à toi-même.</p>
-      <textarea class="input" readonly rows="3" style="font-size:12px;word-break:break-all">${esc(link)}</textarea>
-      <div class="row"><button class="btn ghost" data-x>Fermer</button>${navigator.share ? '<button class="btn blue" data-share>Envoyer…</button>' : ''}<button class="btn" data-copy>Copier</button></div>`);
-    m.querySelector('[data-x]').onclick = () => m.close();
-    m.querySelector('[data-copy]').onclick = async () => { try { await navigator.clipboard.writeText(link); toast('Lien copié'); } catch { m.querySelector('textarea').select(); toast('Sélectionne et copie le lien'); } };
-    m.querySelector('[data-share]')?.addEventListener('click', () => navigator.share({ title: 'Arabe à la maison', text: 'Jumelage de l’appli', url: link }).catch(() => {}));
-  };
   main.querySelector('[data-pull]').onclick = async () => {
     read();
     try {

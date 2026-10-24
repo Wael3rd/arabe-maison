@@ -1,7 +1,7 @@
 // État persistant : contenu (publié ou brouillon), profils, progression, réglages.
 import { todayKey, weekKey } from './util.js';
 
-const K = { profiles: 'ar.profiles', settings: 'ar.settings', draft: 'ar.draft', current: 'ar.current', gh: 'ar.github', pin: 'ar.pin', gone: 'ar.gone' };
+const K = { profiles: 'ar.profiles', settings: 'ar.settings', draft: 'ar.draft', current: 'ar.current', gh: 'ar.github', pin: 'ar.pin', pinAt: 'ar.pinAt', gone: 'ar.gone' };
 
 function load(key, fallback) {
   try { const v = localStorage.getItem(key); return v ? JSON.parse(v) : fallback; } catch { return fallback; }
@@ -55,7 +55,12 @@ export const store = {
   get github() { return load(K.gh, { owner: '', repo: '', branch: 'main', path: 'content.json', token: '' }); },
   set github(v) { save(K.gh, v); },
   get pinHash() { return load(K.pin, null); },
-  set pinHash(v) { save(K.pin, v); },
+  set pinHash(v) { save(K.pin, v); save(K.pinAt, v ? Date.now() : 0); this.onChange?.(); },
+  get pinAt() { return load(K.pinAt, 0); },
+  /** Code parent reçu du compte famille (plus récent que celui de l'appareil). */
+  adoptPin(hash, at) { save(K.pin, hash); save(K.pinAt, at); },
+  /** Déconnexion du compte : les profils restent dans le compte mais quittent cet appareil. */
+  clearProfiles() { this.profiles = []; this.gone = {}; this.currentId = null; save(K.profiles, []); save(K.gone, {}); save(K.current, null); },
 
   saveSettings() { save(K.settings, this.settings); },
 
