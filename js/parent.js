@@ -417,7 +417,7 @@ function github(main) {
       : cloud.last ? `✅ Dernière synchro : ${new Date(cloud.last).toLocaleString('fr-FR', { weekday: 'long', hour: '2-digit', minute: '2-digit' })}` : 'Pas encore synchronisé.';
   };
   cstate(); cloud.onParent = cstate;
-  main.querySelector('[data-csync]').onclick = async () => { read(); await syncNow(); cstate(); toast(cloud.status === 'ok' ? 'Progression synchronisée' : 'Synchro impossible : ' + cloud.error, 4000); };
+  main.querySelector('[data-csync]').onclick = async () => { read(); await syncNow(); cstate(); toast(cloud.status === 'ok' ? 'Progression synchronisée' : cloud.status === 'off' ? 'Synchro désactivée : remplis le compte GitHub, le dépôt et le jeton, puis Enregistrer' : 'Synchro impossible : ' + (cloud.error || 'pas de connexion'), 5000); };
   main.querySelector('[data-pair]').onclick = () => {
     read();
     if (!store.github.token) return toast('Renseigne d’abord le jeton');
